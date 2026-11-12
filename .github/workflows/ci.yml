@@ -1,0 +1,18 @@
+name: ci
+on: [push, pull_request]
+jobs:
+  test-and-eval:
+    runs-on: ubuntu-latest
+    defaults: { run: { working-directory: ai } }
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: "3.12" }
+      - run: pip install -e ".[dev,coach]"
+      - run: pytest -q tests
+      - name: Offline evals (retrieval, tool contracts, guardrails, MCP protocol)
+        run: python evals/run_evals.py
+      - name: Live agent evals (only when the secret is set)
+        if: ${{ env.ANTHROPIC_API_KEY != '' }}
+        env: { ANTHROPIC_API_KEY: "${{ secrets.ANTHROPIC_API_KEY }}" }
+        run: python evals/run_evals.py
