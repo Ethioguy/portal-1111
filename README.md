@@ -6,6 +6,12 @@ Started on 11.11.2026 at 11:11 PM, the "11/11 portal" fresh-start date. Delivere
 
 [Open the app](https://ethioguy.github.io/portal-1111/) · [Case study](docs/CASE_STUDY.md) · [Eval results](ai/evals/results.md) · [AI layer](ai/README.md)
 
+## Why I created it
+
+I started The 11/11 Portal on 11.11.2026 at 11:11 PM as my own fresh start: one place to train, eat well and grow in all 12 areas of life. I'm sharing it openly because I wish everyone their own 11:11 portal: a step through to our next life chapter of abundance and possibility.
+
+*Fitsum Habtemariam ([@Ethioguy](https://github.com/Ethioguy))*
+
 ## What's inside
 
 | Layer | Highlights |

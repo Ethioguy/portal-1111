@@ -13,6 +13,11 @@ The 11/11 Portal is built so that nobody, including the project's author, can se
 ## Personal edition
 A separate file (`private/PERSONAL-portal.html`) adds an option to connect your own Anthropic API key. It is excluded from this repository by `.gitignore` and is meant for the owner's own device only. Requests go directly from that device to Anthropic; the key is kept in memory unless you choose to remember it on that device.
 
+## Cover photos and demo videos
+
+- **Cover photos (both editions, optional).** When you tap *Show suggestions*, your device asks Openverse (`api.openverse.org`) for openly licensed photos. Only the search words for that life area are sent, never your entries. The photo you pick is copied to this device and shown with its creator, license and source. You can also upload your own.
+- **Demo videos (personal edition only).** Nothing loads until you tap. Videos then play from YouTube in privacy-enhanced mode (`youtube-nocookie.com`), which still sees your IP address. Your trim settings are stored on this device. The public edition contains no video embeds.
+
 ## Python AI layer (`ai/`)
 Runs on your own machine against a backup file you choose. Search runs locally; the optional coach sends redacted text to the model provider you configure. Sample data in this repo is synthetic.
 
