@@ -1,0 +1,340 @@
+{
+ "settings": {
+  "start": "2026-11-09",
+  "life": {
+   "health": {
+    "rating": "6",
+    "pv": {
+     "premise": [
+      "My body is the engine for everything I want to build"
+     ],
+     "vision": [
+      "I finish my first Hyrox race strong",
+      "Visible abs and steady energy all day"
+     ],
+     "purpose": [
+      "To have the energy to lead and to keep up with my kids"
+     ],
+     "strategy": [
+      "Run every morning",
+      "Three strength sessions a week",
+      "Protein at every meal"
+     ]
+    }
+   },
+   "fin": {
+    "rating": "5",
+    "pv": {
+     "premise": [
+      "Money is a tool for freedom and service"
+     ],
+     "vision": [
+      "Several income streams and a 12-month safety fund"
+     ],
+     "purpose": [
+      "Security for my family"
+     ],
+     "strategy": [
+      "Monthly budget review",
+      "Automate savings on payday"
+     ]
+    }
+   },
+   "career": {
+    "rating": "7",
+    "pv": {
+     "vision": [
+      "Leading AI-enabled operations for public-sector clients"
+     ],
+     "strategy": [
+      "Earn the PMI-CPMAI",
+      "Ship one AI portfolio project a quarter"
+     ]
+    }
+   },
+   "parent": {
+    "rating": "8",
+    "pv": {
+     "vision": [
+      "Weekly one-on-one time with each child"
+     ]
+    }
+   },
+   "_lv": {
+    "home": "A bright home with a garden and a reading corner.",
+    "day": "Run at sunrise, deep work until noon, family dinner every night."
+   }
+  },
+  "tests": [
+   {
+    "date": "2026-11-15",
+    "k1": "4:52",
+    "pu": "3",
+    "wa": "36.5"
+   }
+  ]
+ },
+ "days": {
+  "2026-11-09": {
+   "run": {
+    "miles": "2.6",
+    "min": "27",
+    "mode": "run",
+    "done": true
+   },
+   "ex": {},
+   "h": {
+    "protein": false,
+    "water": true,
+    "sleep": false
+   },
+   "life": {
+    "health": true
+   },
+   "wd": true,
+   "notes": "First week. Legs heavy after goblet squats, but the morning run felt calm.",
+   "weight": "195.9"
+  },
+  "2026-11-10": {
+   "run": {
+    "miles": "2.1",
+    "min": "31",
+    "mode": "run",
+    "done": true
+   },
+   "ex": {},
+   "h": {
+    "protein": true,
+    "water": true,
+    "sleep": true
+   },
+   "life": {
+    "health": true
+   },
+   "wd": true,
+   "notes": "Intervals were hard. Fourth 400 m was the slowest. Need a better warm-up.",
+   "weight": "195.6"
+  },
+  "2026-11-11": {
+   "run": {
+    "miles": "2.6",
+    "min": "31",
+    "mode": "run",
+    "done": true
+   },
+   "ex": {},
+   "h": {
+    "protein": true,
+    "water": true,
+    "sleep": true
+   },
+   "life": {
+    "health": true
+   },
+   "wd": true,
+   "notes": "Pull-ups still band-assisted. Grip gave out on the dead hang.",
+   "weight": "195.1"
+  },
+  "2026-11-12": {
+   "run": {
+    "miles": "8",
+    "min": "29",
+    "mode": "bike",
+    "done": true
+   },
+   "ex": {},
+   "h": {
+    "protein": false,
+    "water": true,
+    "sleep": false
+   },
+   "life": {
+    "health": true
+   },
+   "wd": true,
+   "notes": "Chose the bike today, knees a bit stiff. Circuit took 44 minutes.",
+   "weight": "195.0"
+  },
+  "2026-11-13": {
+   "run": {
+    "miles": "3.0",
+    "min": "30",
+    "mode": "run",
+    "done": true
+   },
+   "ex": {},
+   "h": {
+    "protein": true,
+    "water": true,
+    "sleep": false
+   },
+   "life": {
+    "health": true
+   },
+   "wd": true,
+   "notes": "Thrusters burned. Slept badly last night, energy low.",
+   "weight": "195.1"
+  },
+  "2026-11-14": {
+   "run": {},
+   "ex": {},
+   "h": {
+    "protein": true,
+    "water": true,
+    "sleep": true
+   },
+   "life": {
+    "health": true
+   },
+   "wd": true,
+   "notes": "Race simulation: 3 rounds in 31 minutes. Transitions were slow.",
+   "weight": "194.3"
+  },
+  "2026-11-15": {
+   "run": {},
+   "ex": {},
+   "h": {
+    "protein": true,
+    "water": true,
+    "sleep": false
+   },
+   "life": {
+    "health": true
+   },
+   "notes": "Rest day. Meal prep for the week: lentils, chicken, teff porridge.",
+   "weight": "194.2"
+  },
+  "2026-11-16": {
+   "run": {
+    "miles": "2.2",
+    "min": "22",
+    "mode": "run",
+    "done": true
+   },
+   "ex": {},
+   "h": {
+    "protein": true,
+    "water": true,
+    "sleep": true
+   },
+   "life": {
+    "health": true
+   },
+   "wd": true,
+   "weight": "194.5"
+  },
+  "2026-11-17": {
+   "run": {
+    "miles": "3.0",
+    "min": "25",
+    "mode": "run",
+    "done": true
+   },
+   "ex": {},
+   "h": {
+    "protein": true,
+    "water": true,
+    "sleep": true
+   },
+   "life": {
+    "health": true
+   },
+   "wd": true,
+   "notes": "Intervals felt better after a longer warm-up. Hit all five reps.",
+   "weight": "194.6"
+  },
+  "2026-11-18": {
+   "run": {
+    "miles": "2.6",
+    "min": "32",
+    "mode": "run",
+    "done": true
+   },
+   "ex": {},
+   "h": {
+    "protein": true,
+    "water": true,
+    "sleep": false
+   },
+   "life": {
+    "health": true
+   },
+   "wd": true,
+   "weight": "193.8"
+  },
+  "2026-11-19": {
+   "run": {
+    "miles": "2.6",
+    "min": "26",
+    "mode": "run",
+    "done": true
+   },
+   "ex": {},
+   "h": {
+    "protein": true,
+    "water": true,
+    "sleep": true
+   },
+   "life": {
+    "health": true,
+    "intel": true,
+    "fin": true
+   },
+   "wd": true,
+   "notes": "Read 30 pages tonight and planned the budget for December.",
+   "weight": "193.1"
+  },
+  "2026-11-20": {
+   "run": {
+    "miles": "2.6",
+    "min": "25",
+    "mode": "run",
+    "done": true
+   },
+   "ex": {},
+   "h": {
+    "protein": true,
+    "water": true,
+    "sleep": true
+   },
+   "life": {
+    "health": true
+   },
+   "wd": true,
+   "weight": "193.0"
+  },
+  "2026-11-21": {
+   "run": {},
+   "ex": {},
+   "h": {
+    "protein": true,
+    "water": true,
+    "sleep": true
+   },
+   "life": {
+    "health": true
+   },
+   "wd": true,
+   "notes": "Simulation: 4 rounds in 38 minutes, faster transitions.",
+   "weight": "192.6"
+  },
+  "2026-11-22": {
+   "run": {},
+   "ex": {},
+   "h": {
+    "protein": true,
+    "water": true,
+    "sleep": true
+   },
+   "life": {
+    "health": true,
+    "intel": true,
+    "fin": true,
+    "parent": true,
+    "career": true
+   },
+   "notes": "Family walk in the park with the kids, then a call with a mentor about career goals.",
+   "weight": "193.1"
+  }
+ }
+}

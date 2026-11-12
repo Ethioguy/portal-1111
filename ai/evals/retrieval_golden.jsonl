@@ -1,0 +1,12 @@
+{"q": "Why did my grip fail?", "expect": ["note:2026-11-11:0"]}
+{"q": "How did the intervals go after a longer warm-up?", "expect": ["note:2026-11-17:0"]}
+{"q": "race simulation time and transitions", "expect": ["note:2026-11-14:0", "note:2026-11-21:0"]}
+{"q": "what did I meal prep", "expect": ["note:2026-11-15:0"]}
+{"q": "When did I ride the bike instead of running?", "expect": ["run:2026-11-12", "note:2026-11-12:0"]}
+{"q": "my money goals and savings plan", "expect": ["area:fin:vision:0", "area:fin:strategy:1"]}
+{"q": "What is my vision for my career?", "expect": ["area:career:vision:0"]}
+{"q": "time with my kids", "expect": ["area:parent:vision:0", "note:2026-11-22:0"]}
+{"q": "Why does fitness matter to me?", "expect": ["area:health:purpose:0"]}
+{"q": "describe my ideal day", "expect": ["vision:day"]}
+{"q": "1 km test result and pull-ups", "expect": ["test:2026-11-15"]}
+{"q": "sleep and low energy", "expect": ["note:2026-11-13:0"]}

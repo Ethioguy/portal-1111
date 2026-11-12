@@ -1,0 +1,19 @@
+[project]
+name = "portal-ai"
+version = "0.1.0"
+description = "AI layer for The 11/11 Portal: MCP server, RAG journal search, tool-using coach agent, FastAPI API and evals."
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "MIT" }
+dependencies = ["mcp>=2.0", "fastapi>=0.110", "uvicorn>=0.29"]
+
+[project.optional-dependencies]
+coach = ["anthropic>=0.40"]
+dev = ["pytest>=8", "httpx>=0.27"]
+
+[project.scripts]
+portal-mcp = "portal_ai.mcp_server:main"
+portal-evals = "evals.run_evals:main"
+
+[tool.setuptools.packages.find]
+include = ["portal_ai*", "evals*"]
