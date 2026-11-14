@@ -1,47 +1,47 @@
-# The 11/11 Portal
+# portal-ai — the AI layer of The 11/11 Portal for Wellness
 
-**A local-first life and training tracker with an agent-ready AI layer: an MCP server, RAG, a tool-using coach and CI evals.**
+Python package that turns the tracker into an agent-ready system.
 
-Started on 11.11.2026 at 11:11 PM, the "11/11 portal" fresh-start date. Delivered with the six-phase PMI-CPMAI methodology. Read the [case study](docs/CASE_STUDY.md).
-
-[Open the app](https://ethioguy.github.io/portal-1111/) · [Case study](docs/CASE_STUDY.md) · [Eval results](ai/evals/results.md) · [AI layer](ai/README.md)
-
-## Why I created it
-
-I started The 11/11 Portal on 11.11.2026 at 11:11 PM as my own fresh start: one place to train, eat well and grow in all 12 areas of life. I'm sharing it openly because I wish everyone their own 11:11 portal: a step through to our next life chapter of abundance and possibility.
-
-*Fitsum Habtemariam ([@Ethioguy](https://github.com/Ethioguy))*
-
-## What's inside
-
-| Layer | Highlights |
-|---|---|
-| **Web app** (`index.html`) | 12-week home training plan, daily run log with pace, timers (supersets, EMOM, intervals, race stopwatch), 12 life areas with Premise / Vision / Purpose / Strategy pages and photos, progress charts. Installable, works offline, data stays in your browser |
-| **Coach (bring your own AI)** | Public edition: copy a privacy-cleaned summary into any AI. Personal edition: the owner's own Claude key, called directly from the device with 4 client-side tools and approve-before-save writes. Nothing passes through a project server |
-| **Guide** | A first-run guided tour, a Guide tab with how-to steps for every feature, and a 24/7 offline guide bot behind the ? button on every screen. It answers from built-in help, so nothing leaves the device |
-| **MCP server** (`ai/portal_ai/mcp_server.py`) | 6 tools + 1 resource, read-only/write annotations, preview-then-confirm writes |
-| **RAG** (`ai/portal_ai/rag.py`) | Chunking, BM25 + query expansion, optional embedding rerank, citable ids, runs offline |
-| **Coach agent** (`ai/portal_ai/coach.py`) | Claude tool use, human-in-the-loop, guardrails, step limit, token/latency traces |
-| **API** (`ai/portal_ai/api.py`) | FastAPI with validated inputs |
-| **Evals** (`ai/evals/`) | Recall@3 0.92 · MRR 0.88 · 17/17 contract, guardrail and MCP checks, run in GitHub Actions |
-
-## Two editions
-| Edition | File | AI |
+| Component | File | What it does |
 |---|---|---|
-| **Public** (GitHub Pages) | `index.html` | Option 1: copy a redacted summary into any AI. Contains no AI-connection code, no outside requests, and a strict CSP |
-| **Personal** (owner's device only, never committed) | `private/PERSONAL-portal.html` | Option 1 plus Option 2: your own Claude key, direct from your device, approve-before-save |
+| Tool layer | `portal_ai/tools.py` | One set of typed tools shared by every surface; read tools are side-effect free, write tools preview first and only commit with `confirm=true`; every call is audit-logged |
+| MCP server | `portal_ai/mcp_server.py` | Exposes 6 tools + 1 resource over the Model Context Protocol, with read-only / write annotations |
+| RAG | `portal_ai/rag.py` | Builds documents from your entries, chunks them, BM25 retrieval with query expansion, optional embedding rerank; runs fully offline |
+| Coach agent | `portal_ai/coach.py` | Claude tool-use loop: plan → call tools → observe → answer with citations; step limit, token/latency trace, model can't approve its own writes |
+| Guardrails | `portal_ai/guardrails.py` | Redacts emails, phone and ID numbers before anything reaches a hosted model; refers pain/injury questions to a doctor |
+| API | `portal_ai/api.py` | FastAPI: `/health`, `/plan/{day}`, `/search`, `/summary/{day}`, `/areas`, `/coach` |
+| Evals | `evals/run_evals.py` | Retrieval recall@3 / MRR, tool contracts, guardrails, a real MCP stdio round trip, and live agent evals when a key is set |
 
-Both are built from `app.src.html` with `python tools/build_editions.py`. See [PRIVACY.md](PRIVACY.md).
-
-## Run it
+## Quick start
 ```bash
-cd ai && pip install -e ".[dev,coach]"
-pytest -q tests && python evals/run_evals.py
-uvicorn portal_ai.api:app
+cd ai
+pip install -e ".[dev,coach]"
+pytest -q tests                  # unit tests
+python evals/run_evals.py        # writes evals/results.md
+uvicorn portal_ai.api:app        # http://127.0.0.1:8000/docs
 ```
 
-## Privacy (local-first by design)
-Sync between your own devices uses an end-to-end encrypted file (AES-256-GCM + PBKDF2) that you carry via iCloud Drive or AirDrop. No sync server.
-There is no project server and no account. Each person's entries stay in their own browser; the AI runs on *their* terms: they pick what to share, contact details are redacted, keys are kept only if they choose, and every write needs their tap. Your entries stay on your device. Sample data is synthetic. Personal exports and any licensed course materials are excluded by `.gitignore`.
+Your own data: in the web app open **Setup → Copy backup**, save it as JSON and point `PORTAL_DATA` at it. The demo data in `sample_data/` is synthetic.
 
-General fitness guidance, not medical advice. MIT License.
+## Use it from Claude Desktop (MCP)
+Add to `claude_desktop_config.json`:
+```json
+{
+  "mcpServers": {
+    "the-11-11-portal": {
+      "command": "python",
+      "args": ["-m", "portal_ai.mcp_server"],
+      "cwd": "/path/to/portal-1111/ai",
+      "env": { "PORTAL_DATA": "/path/to/my-backup.json" }
+    }
+  }
+}
+```
+Then ask: *"What did I write about my grip, and what's my workout tomorrow?"*
+
+## Coach agent
+```bash
+export ANTHROPIC_API_KEY=...            # optional; everything else runs offline
+export PORTAL_MODEL=claude-sonnet-5-5   # pick the model by quality, latency and cost
+python -c "from portal_ai.coach import Coach; print(Coach().ask('How was my week?')[0])"
+```

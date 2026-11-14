@@ -1,6 +1,6 @@
 # Privacy
 
-The 11/11 Portal is built so that nobody, including the project's author, can see your data.
+The 11/11 Portal for Wellness is built so that nobody, including the project's author, can see your data.
 
 ## Public edition (this website)
 - **No accounts, no server, no database.** Everything you enter, including photos, is stored only in your browser on your device.
@@ -17,6 +17,10 @@ A separate file (`private/PERSONAL-portal.html`) adds an option to connect your 
 
 - **Cover photos (both editions, optional).** When you tap *Show suggestions*, your device asks Openverse (`api.openverse.org`) for openly licensed photos. Only the search words for that life area are sent, never your entries. The photo you pick is copied to this device and shown with its creator, license and source. You can also upload your own.
 - **Demo videos (personal edition only).** Nothing loads until you tap. Videos then play from YouTube in privacy-enhanced mode (`youtube-nocookie.com`), which still sees your IP address. Your trim settings are stored on this device. The public edition contains no video embeds.
+
+## Watch import
+
+The optional iPhone Shortcut opens the app with your distance and minutes in the part of the link after `#`. Browsers never send that part to any server, including GitHub Pages. The app shows the numbers and saves them on this device only when you tap Save.
 
 ## Python AI layer (`ai/`)
 Runs on your own machine against a backup file you choose. Search runs locally; the optional coach sends redacted text to the model provider you configure. Sample data in this repo is synthetic.

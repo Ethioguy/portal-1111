@@ -1,4 +1,4 @@
-"""Builds the two editions of The 11/11 Portal from app.src.html.
+"""Builds the two editions of The 11/11 Portal for Wellness from app.src.html.
 
 public   -> index.html                        Option 1 only. No AI connection code, no third-party
                                               requests (system fonts), strict Content-Security-Policy.
@@ -46,7 +46,7 @@ for banned in ("api.anthropic.com", "x-api-key", "fonts.googleapis.com", "claude
 
 personal = unmark(base, "P2")
 personal = personal.replace("<meta charset=\"utf-8\">\n", "<meta charset=\"utf-8\">\n" + head_extra(CSP_PERSONAL), 1)
-personal = personal.replace("<title>The 11/11 Portal", "<title>[Personal] The 11/11 Portal", 1)
+personal = personal.replace("<title>The 11/11 Portal for Wellness", "<title>[Personal] The 11/11 Portal for Wellness", 1)
 personal = label(personal, "Personal edition. For your own device only; do not upload or share this file.")
 (ROOT / "private").mkdir(exist_ok=True)
 (ROOT / "private" / "PERSONAL-portal.html").write_text(personal)

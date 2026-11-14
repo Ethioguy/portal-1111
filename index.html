@@ -6,7 +6,7 @@
 <meta name="referrer" content="no-referrer">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#F4FAF2">
-<title>The 11/11 Portal · Life &amp; Training Tracker</title>
+<title>The 11/11 Portal for Wellness · Life &amp; Training Tracker</title>
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="icon" href="icon.svg" type="image/svg+xml">
 <style>
@@ -181,6 +181,29 @@ details.lc[open]>summary,details.lc>summary:hover{background:var(--card)}
 .msg.s{align-self:center;background:transparent;color:var(--muted);font-size:13px;padding:2px}
 .cite{font-size:11px;background:#DDF5D6;color:#0F5A0C;border-radius:6px;padding:1px 5px;font-weight:600}
 .tiny{font-size:12px;color:var(--muted)}
+.cc-big{font-family:Sora,Inter,sans-serif;font-size:52px;font-weight:800;line-height:1;margin:6px 0 4px}
+.cc-say{font-size:17px;line-height:1.35;margin:0 0 12px}
+.cc-say u{text-decoration-color:var(--red);text-decoration-thickness:3px;text-underline-offset:4px}
+.cc-bar{display:flex;height:56px;border-radius:12px;overflow:hidden;border:1px solid var(--line);background:var(--card2)}
+.cc-bar i{display:block;min-width:3px}
+.cc-row{display:flex;align-items:center;gap:10px;background:var(--card2);border-radius:10px;padding:10px 12px;margin-top:8px}
+.cc-row .dot{flex:none;width:12px;height:12px;border-radius:50%}
+.cc-row b{margin-left:auto;font-family:Sora,Inter,sans-serif}
+.cc-streak{display:flex;align-items:center;gap:12px;margin-top:12px}
+.cc-streak svg{flex:none}
+.cc-streak b{display:block;font-size:17px}
+.cc-streak span{color:var(--muted);font-size:14px}
+.cc-medals{display:flex;gap:8px;margin-top:10px}
+.cc-medal{flex:1;text-align:center;font-size:12px;color:var(--muted)}
+.cc-medal i{display:flex;align-items:center;justify-content:center;margin:0 auto 4px;width:56px;height:56px;border-radius:16px;border:2px dashed var(--line);font-style:normal;font-family:Sora,Inter,sans-serif;font-weight:800;font-size:18px;color:#8A988D;transform:rotate(45deg)}
+.cc-medal i span{transform:rotate(-45deg)}
+.cc-medal.on i{border:0;color:#fff}
+.cc-medal.on{color:var(--text);font-weight:600}
+.cc-refl{display:flex;gap:6px;margin-top:10px}
+.cc-refl button{flex:1;min-height:48px;border-radius:10px;border:1px solid var(--line);background:var(--card2);font-weight:700;font-size:16px}
+.cc-refl button[aria-pressed="true"]{background:var(--red);border-color:var(--red);color:var(--ink)}
+.cc-dots{display:flex;align-items:flex-end;gap:8px;height:64px;margin-top:12px;padding:0 4px;border-bottom:2px solid var(--line)}
+.cc-dots i{flex:1;background:var(--red);border-radius:6px 6px 0 0;min-height:6px}
 .wel-back{position:fixed;inset:0;z-index:60;background:rgba(16,34,26,.55);display:flex;align-items:center;justify-content:center;padding:14px;overflow:auto}
 .wel{background:var(--card);border-radius:18px;max-width:520px;width:100%;overflow:hidden;box-shadow:0 14px 40px rgba(0,0,0,.3);margin:auto}
 .wel-head{background:linear-gradient(90deg,#0E4F0C,#22a11e);color:#fff;padding:18px 18px;display:flex;align-items:center;justify-content:space-between;gap:10px}
@@ -195,6 +218,23 @@ details.lc[open]>summary,details.lc>summary:hover{background:var(--card)}
 .wel-step span{font-size:14px;color:var(--muted);line-height:1.45}
 .wel-go{width:100%;background:linear-gradient(90deg,#0E4F0C,#22a11e);color:#fff;font-size:17px}
 .wel-skip{display:block;width:100%;background:transparent;border:0;color:var(--muted);font-size:15px;min-height:44px;margin-top:6px;text-decoration:underline}
+@media (max-width:480px){
+.wel-back{padding:10px}
+.wel{max-width:340px;border-radius:14px}
+.wel-head{padding:10px 12px}
+.wel-head h2{font-size:16px}
+.wel-x{font-size:18px}
+.wel-body{padding:12px}
+.wel-body>p{font-size:13px;line-height:1.4;margin:0 0 10px}
+.wel-step{gap:9px;margin:0 0 9px}
+.wel-ic{width:30px;height:30px}
+.wel-ic svg{width:16px;height:16px}
+.wel-step small{font-size:10.5px}
+.wel-step b{font-size:14px}
+.wel-step span{font-size:12.5px;line-height:1.35}
+.wel-go{font-size:15px;min-height:44px}
+.wel-skip{font-size:13.5px;margin-top:2px}
+}
 .tour-back{position:fixed;inset:0;z-index:50;pointer-events:auto}
 .tour-ring{position:fixed;z-index:51;border-radius:12px;box-shadow:0 0 0 4px var(--red),0 0 0 9999px rgba(16,34,26,.55);transition:all .25s;pointer-events:none}
 .tour-card{position:fixed;z-index:52;left:12px;right:12px;max-width:520px;margin:0 auto;background:var(--card);border-radius:16px;padding:16px;box-shadow:0 10px 30px rgba(0,0,0,.25)}
@@ -216,7 +256,7 @@ details.lc[open]>summary,details.lc>summary:hover{background:var(--card)}
   <header class="top">
     <div class="brand">
       <svg viewBox="0 0 64 64" aria-hidden="true"><defs><linearGradient id="lgh" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#3CC437"/><stop offset="1" stop-color="#1A8A17"/></linearGradient></defs><rect width="64" height="64" rx="14" fill="url(#lgh)"/><circle cx="32" cy="32" r="23" fill="none" stroke="#FFFFFF" stroke-width="4.5"/><g fill="#FFFFFF"><rect x="17" y="23" width="3.6" height="18" rx="1.5"/><rect x="23" y="23" width="3.6" height="18" rx="1.5"/><rect x="37.4" y="23" width="3.6" height="18" rx="1.5"/><rect x="43.4" y="23" width="3.6" height="18" rx="1.5"/></g><path d="M35 20.5 L29 43.5" stroke="#FFE066" stroke-width="3.2" stroke-linecap="round"/></svg>
-      <span style="display:flex;flex-direction:column;line-height:1"><b>The 11/11 Portal</b><span style="font-size:10px;color:var(--muted);letter-spacing:1px;text-transform:uppercase;margin-top:3px">Since 11.11.2026 · 11:11 PM</span></span>
+      <span style="display:flex;flex-direction:column;line-height:1"><b>11/11 Portal</b><span style="font-size:11px;color:var(--red2);font-weight:700;letter-spacing:1.5px;text-transform:uppercase;margin-top:3px">for Wellness</span><span style="font-size:10px;color:var(--muted);letter-spacing:1px;text-transform:uppercase;margin-top:3px">Since 11.11.2026 · 11:11 PM</span></span>
     </div>
     <div class="sync" id="sync" aria-live="polite">Saved on this device</div>
   </header>
@@ -533,7 +573,7 @@ function vProgress(){
   if(pts.length<2){h+='<p class="muted small">Log your morning weight on the Today screen for a few days to see your trend.</p>';}
   else{var ws=pts.map(function(k){return+state.days[k].weight;}),mn=Math.min.apply(null,ws),mx=Math.max.apply(null,ws);if(mx-mn<1){mx+=0.5;mn-=0.5;}
     var W=320,H=120,poly=ws.map(function(v,i){return(10+i*(W-20)/(ws.length-1)).toFixed(1)+","+(10+(mx-v)*(H-20)/(mx-mn)).toFixed(1);}).join(" ");
-    h+='<svg viewBox="0 0 '+W+' '+H+'" width="100%" role="img" aria-label="Weight from '+ws[0]+' to '+ws[ws.length-1]+'"><polyline points="'+poly+'" fill="none" stroke="#22a11e" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"/></svg><div class="row between small muted"><span>'+ws[0]+'</span><span>Latest: <b style="color:#fff">'+ws[ws.length-1]+'</b> ('+(ws[ws.length-1]-ws[0]>0?"+":"")+(ws[ws.length-1]-ws[0]).toFixed(1)+')</span></div>';}
+    h+='<svg viewBox="0 0 '+W+' '+H+'" width="100%" role="img" aria-label="Weight from '+ws[0]+' to '+ws[ws.length-1]+'"><polyline points="'+poly+'" fill="none" stroke="#22a11e" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"/></svg><div class="row between small muted"><span>'+ws[0]+'</span><span>Latest: <b>'+ws[ws.length-1]+'</b> ('+(ws[ws.length-1]-ws[0]>0?"+":"")+(ws[ws.length-1]-ws[0]).toFixed(1)+')</span></div>';}
   h+='</section>';
   var tests=(state.settings.tests||[]).slice().sort(function(a,b){return a.date<b.date?1:-1;});
   h+='<section class="card"><h2>Tests (every 4 weeks)</h2><div class="fields"><label class="f">1 km time<input type="text" id="t1k" placeholder="4:30"></label><label class="f">Pull-ups<input type="number" id="tpu" min="0"></label><label class="f">Waist (in)<input type="number" id="twa" step="0.1" min="0"></label></div><button type="button" class="btn ghost block" style="margin-top:10px" data-act="addtest">Save test for '+esc(pretty(sel))+'</button>';
@@ -541,6 +581,50 @@ function vProgress(){
   h+='</section>';
   var sims=Object.keys(state.days).sort().filter(function(k){return+state.days[k].simtime>0;}).slice(-8);
   if(sims.length){h+='<section class="card"><h2>Race simulations</h2><table><tbody>'+sims.map(function(k){return'<tr><td>'+esc(k)+'</td><td>Week '+weekNum(k)+'</td><td><b>'+esc(state.days[k].simtime)+' min</b></td></tr>';}).join("")+'</tbody></table></section>';}
+  return h;
+}
+
+// ---------- Command center (Stats) ----------
+var statsTab="progress";
+var TRACKS=[
+ ["train","Train","Workout finished","#1A7F17",function(k){return workoutDone(k);},true],
+ ["run","Run","Morning run or ride logged","#0B6E99",function(k){return runDone(k);},true],
+ ["stretch","Stretch","Warm-up or cool-down ticked","#B45309",function(k){var d=state.days[k];if(!d)return false;return[d.wu,d.cd].some(function(o){return o&&Object.keys(o).some(function(i){return o[i];});});},true],
+ ["fuel","Fuel & sleep","3 of 4 daily habits","#7A3E9D",function(k){return habitsCount(k)>=3;},false],
+ ["life","Life areas","One or more areas practised","#0F766E",function(k){var d=state.days[k];return!!(d&&d.life&&Object.keys(d.life).some(function(c){return d.life[c];}));},false]
+];
+var MEDALS=[10,25,50,100];
+function trackStats(t){
+  var on=t[4],rest=t[5],keys=Object.keys(state.days).sort(),total=0,best=0,cur=0,run=0;
+  keys.forEach(function(k){if(on(k))total++;});
+  if(keys.length){var k=keys[0],end=todayKey(),g=0;
+    while(k<=end&&g<2000){g++;if(on(k)){run++;if(run>best)best=run;}else if(!(rest&&parseKey(k).getDay()===0)&&k!==end){run=0;}k=addDays(k,1);}
+    cur=run;}
+  return{total:total,best:best,cur:cur};
+}
+function flame(c,sz){return'<svg width="'+sz+'" height="'+sz+'" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2c1 4 6 6 6 12a6 6 0 0 1-12 0c0-2 1-3.500 2-4.500 0 2 1 3 2 3 0-4 1-7 2-10.500z" fill="'+c+'"/></svg>';}
+function reflList(){return(state.settings.refl||[]).slice().sort(function(a,b){return a.d<b.d?-1:1;});}
+function shareText(){var st=TRACKS.map(function(t){return[t,trackStats(t)];}),tot=st.reduce(function(a,x){return a+x[1].total;},0);
+  return"My 11/11 Portal progress: "+tot+" wins logged. "+st.map(function(x){return x[0][1]+" "+x[1].total+" (streak "+x[1].cur+")";}).join(", ")+".";}
+function vCommand(){
+  var st=TRACKS.map(function(t){return[t,trackStats(t)];}),tot=st.reduce(function(a,x){return a+x[1].total;},0);
+  var h='<div class="seg" role="group" aria-label="Dashboard sections" style="margin-bottom:12px">'+[["progress","Progress"],["miles","Milestones"],["body","Body & tests"]].map(function(x){return'<button type="button" data-act="stab" data-v="'+x[0]+'" aria-pressed="'+(statsTab===x[0])+'">'+x[1]+'</button>';}).join("")+'</div>';
+  if(statsTab==="body")return h+vProgress();
+  if(statsTab==="miles"){
+    st.forEach(function(x){var t=x[0],n=x[1].total,nx=MEDALS.filter(function(m){return m>n;})[0];
+      h+='<section class="card"><div class="row between"><div><h2 style="margin:0">'+t[1]+'</h2><span class="small muted">'+t[2]+'</span></div><span class="cc-big" style="font-size:38px;margin:0">'+n+'</span></div><div class="cc-medals" role="list" aria-label="'+t[1]+' milestones">'+MEDALS.map(function(m){var on=n>=m;return'<div class="cc-medal'+(on?" on":"")+'" role="listitem"><i'+(on?' style="background:'+t[3]+'"':"")+'><span>'+m+'</span></i>'+(on?"✓ ":"")+m+' days</div>';}).join("")+'</div><p class="small muted" style="margin:10px 0 0">'+(nx?(nx-n)+" more to reach "+nx+".":"Every milestone reached. Keep going.")+'</p></section>';});
+    return h;}
+  var top=st.slice().sort(function(a,b){return b[1].cur-a[1].cur;})[0];
+  h+='<section class="card"><div class="row between"><h2 style="margin:0">Total wins</h2><button type="button" class="btn ghost" style="min-height:40px;padding:6px 14px" data-act="ccshare">Share</button></div><div class="cc-big">'+tot+'</div><p class="cc-say">'+(tot?'<u>'+tot+' '+(tot===1?"win":"wins")+'</u> logged on the way to your next chapter.':"Tick off your first workout, run or life area on Today and it shows up here.")+'</p>';
+  h+='<div class="cc-bar" role="img" aria-label="'+st.map(function(x){return x[0][1]+" "+x[1].total;}).join(", ")+'">'+(tot?st.map(function(x){return x[1].total?'<i style="flex:'+x[1].total+';background:'+x[0][3]+'"></i>':"";}).join(""):"")+'</div>';
+  h+=st.map(function(x){return'<div class="cc-row"><span class="dot" style="background:'+x[0][3]+'"></span><span>'+x[0][1]+'</span><b>'+x[1].total+'</b></div>';}).join("")+'</section>';
+  h+='<section class="card"><h2 style="margin:0">Streaks</h2><div class="cc-big">'+top[1].cur+'</div><p class="cc-say">'+(top[1].cur?'Your longest live streak is <u>'+top[1].cur+' '+(top[1].cur===1?"day":"days")+'</u> on '+top[0][1].toLowerCase()+'.':"No live streak yet. One tick today starts one.")+'</p>'+st.map(function(x){var c=x[1].cur;return'<div class="cc-streak">'+flame(c?x[0][3]:"#C9D4CB",44)+'<div><b>'+(c?c+(c===1?" day":" days")+" in a row":"Not started")+'</b><span>'+x[0][1]+' · best '+x[1].best+'</span></div></div>';}).join("")+'<p class="small muted" style="margin:12px 0 0">Sunday is a rest day, so it never breaks a Train, Run or Stretch streak.</p></section>';
+  var rf=reflList(),today=rf.filter(function(r){return r.d===todayKey();})[0],last=rf.slice(-5);
+  h+='<section class="card"><h2 style="margin:0">Check-in</h2><p class="cc-say" style="margin-top:8px">How do you feel about your progress right now?</p><div class="cc-refl" role="group" aria-label="Rate your progress from 1, not good, to 5, great">'+[1,2,3,4,5].map(function(n){return'<button type="button" data-act="refl" data-v="'+n+'" aria-pressed="'+(!!today&&today.v===n)+'" aria-label="'+n+' out of 5">'+n+'</button>';}).join("")+'</div><div class="row between small muted" style="margin-top:4px"><span>Not good</span><span>Great</span></div>';
+  h+=last.length>=2?'<div class="cc-dots" role="img" aria-label="Last '+last.length+' check-ins: '+last.map(function(r){return r.v;}).join(", ")+' out of 5">'+last.map(function(r){return'<i style="height:'+(r.v*20)+'%" title="'+esc(r.d)+'"></i>';}).join("")+'</div><p class="small muted" style="margin:6px 0 0">Your last '+last.length+' check-ins.</p>':'<p class="small muted" style="margin:10px 0 0">Check in on two different days to see your trend.</p>';
+  h+='</section>';
+  var wk=CATS.filter(function(c){return lifeWeek(c[0],todayKey())>0;}).length;
+  h+='<section class="card"><h2 style="margin:0">This week</h2><div class="stats"><div class="stat"><b>'+weekMiles(mondayOf(todayKey())).toFixed(1)+'</b><span>Miles run</span></div><div class="stat"><b>'+wk+'/'+CATS.length+'</b><span>Life areas</span></div><div class="stat"><b>'+streak()+'</b><span>Active streak</span></div></div></section>';
   return h;
 }
 
@@ -668,7 +752,7 @@ var HELP=[
  {id:"habits",tab:"today",title:"Track habits, weight and waist",kw:"habits protein veg water sleep weight waist notes journal",steps:["On Today, tap the four daily habits as you complete them.","Enter your morning weight and waist when you measure.","Write a short note on how the day felt. The coach can use it later."]},
  {id:"life",tab:"life",title:"Check in on your 11 life areas",kw:"life areas categories check in rating satisfaction overview",steps:["Open Life → Overview.","Tap the circle on a row when you put time into that area today.","Open a row to rate how satisfied you are from 1 to 10.","Health & Fitness ticks itself when you log a run or workout."]},
  {id:"portal",tab:"life",title:"Write your Premise, Vision, Purpose and Strategy",kw:"my portal premise vision purpose strategy bullets photos page notes plan write",steps:["Open Life → My Portal.","Swipe the hexagon icons to choose an area.","Fill in up to three bullets for each section. A new line appears when you need it.","Add two photos per section to make it visual. Photos stay on this device."]},
- {id:"why",tab:"guide",title:"Why The 11/11 Portal was created",kw:"why created purpose story creator mission 11:11 portal fresh start abundance possibility meaning",steps:["It began on 11.11.2026 at 11:11 PM as a personal fresh start: training, eating well and growing in all 11 areas of life.","It is shared openly to wish everyone their own 11:11 portal: a step through to our next life chapter of abundance and possibility."]},
+ {id:"why",tab:"guide",title:"Why The 11/11 Portal for Wellness was created",kw:"why created purpose story creator mission 11:11 portal fresh start abundance possibility meaning",steps:["It began on 11.11.2026 at 11:11 PM as a personal fresh start: training, eating well and growing in all 11 areas of life.","It is shared openly to wish everyone their own 11:11 portal: a step through to our next life chapter of abundance and possibility."]},
  {id:"recipes",tab:"today",title:"Find recipes and smoothies",kw:"recipe recipes smoothie green smoothie food meal nutrition protein eat breakfast dinner fuel teff oats lentil chicken",steps:["On Today, scroll to Fuel for today's ideas: the daily green smoothie plus one meal.","Tap a recipe to see ingredients, steps and a tip, or tap All recipes for the full list.","Recipes are high-protein, whole-food and quick to prep. Check ingredients for allergies."]},
  {id:"lifecoach",tab:"coach",title:"Get coached through your life areas, step by step",kw:"life coach coaching guide guidance step by step premise vision purpose strategy commit areas categories teach prompt",steps:["Open the Coach tab and tap Start (or Continue) under Step-by-step life coach. It suggests the area you've written least about.","Step 1, Learn: read why the area matters and one idea to hold onto.","Steps 2 to 5: answer the prompts for Premise, Vision, Purpose and Strategy, one statement per line, then Save and continue. Skip any step you like.","Step 6, Commit: choose one small action for this week and when. It's added to your Strategy and the area is checked in today.","You can also start from any area's page in Life → My Portal. Everything stays on this device."]},
  {id:"watch",tab:"today",title:"Connect Apple Watch (or another watch)",kw:"apple watch garmin fitbit watch health connect sync import shortcut automation heart workout distance",steps:["A web app can't read Apple Health directly, so an iPhone Shortcut passes your numbers in. On iPhone, open Shortcuts and tap + to make a new shortcut called Log to 11/11 Portal.","Add Find Health Samples: type Walking + Running Distance, start date is today. Then add Calculate Statistics: Sum (set the unit to miles).","Add Find Health Samples again: type Exercise Minutes (Apple Exercise Time), start date is today, then Calculate Statistics: Sum.","Add a URL action: https://ethioguy.github.io/portal-1111/#log?mi=[distance sum]&min=[minutes sum]. Then add Open URLs.","Run it after training (or ask Siri). The app opens, shows the numbers, and saves only when you tap Save.","Optional: Shortcuts → Automation can run it for you, for example at a set time of day or, on recent iOS versions, when an Apple Watch workout ends.","Garmin, Fitbit and other watches that sync to Apple Health work the same way. On Android there is no browser access to Health Connect yet, so enter the numbers by hand."]},
@@ -699,7 +783,7 @@ var helpOpen=false;
 function botPanel(){var h='<div class="chat" aria-live="polite">'+(guideLog.length?guideLog.map(function(m){return m.r==="u"?'<div class="msg u">'+esc(m.t)+'</div>':m.h?helpCard(m.h):'<div class="msg a">'+esc(m.t)+(m.cta?'<div style="margin-top:8px"><button type="button" class="btn ghost" style="min-height:38px;padding:6px 12px" data-act="gogo" data-v="coach">Open Coach</button></div>':'')+'</div>';}).join(""):'<div class="msg a">Hi! I’m here 24/7. Ask me how to use anything, or a quick training question.</div>')+'</div>';
   h+='<div class="gq">'+["Log a run","I missed a workout","What should I eat?","Sync my devices"].map(function(q){return'<button type="button" class="chip" data-act="gask" data-v="'+q+'">'+q+'</button>';}).join("")+'</div>';
   return h+'<form class="row gform" style="margin-top:10px"><input type="text" class="gqin" aria-label="Ask the guide" placeholder="Ask anything…" style="flex:1"><button type="submit" class="btn">Ask</button></form>';}
-function whyCard(){return'<section class="card why"><h2>Why I created it</h2><p style="margin:8px 0 0;line-height:1.6">I started The 11/11 Portal on 11.11.2026 at 11:11 PM as my own fresh start: one place to train, eat well and grow in all 11 areas of life.</p><p style="margin:10px 0 0;line-height:1.6">I’m sharing it openly because I wish everyone their own 11:11 portal: a step through to our next life chapter of abundance and possibility.</p><p class="small muted" style="margin:10px 0 0">Fitsum Habtemariam, creator</p></section>';}
+function whyCard(){return'<section class="card why"><h2>Why I created it</h2><p style="margin:8px 0 0;line-height:1.6">I started The 11/11 Portal for Wellness on 11.11.2026 at 11:11 PM as my own fresh start: one place to train, eat well and grow in all 11 areas of life.</p><p style="margin:10px 0 0;line-height:1.6">I’m sharing it openly because I wish everyone their own 11:11 portal: a step through to our next life chapter of abundance and possibility.</p><p class="small muted" style="margin:10px 0 0">Fitsum Habtemariam, creator</p></section>';}
 function vGuide(){
   var h='<section class="card hero"><div class="big">Guide</div><p class="small" style="margin:6px 0 10px;color:#2F5A2C">Learn every feature in a few minutes.</p><button type="button" class="btn" data-act="tourstart">Start the guided tour</button></section>';
   h+=whyCard();
@@ -714,15 +798,15 @@ function welIc(d){return'<span class="wel-ic" aria-hidden="true"><svg viewBox="0
 function welcomeShow(){var o=document.getElementById("welcome");if(o)o.remove();o=document.createElement("div");o.id="welcome";o.className="wel-back";
   var st=[['<path d="M8 2v4M16 2v4M3 10h18"/><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M9 16l2 2 4-4"/>',"Train today","Open Today for your workout, warm-up, cool-down and run log. Tick things off as you go."],
           ['<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>',"Grow in all 11 areas of life","In Life, the coach walks you through each area step by step, at your own pace."],
-          ['<path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/>',"See your progress and keep it safe","Stats shows your streaks and miles. Your entries are saved on this device; back them up in Setup."]];
-  o.innerHTML='<div class="wel" role="dialog" aria-modal="true" aria-labelledby="welt"><div class="wel-head"><h2 id="welt">Welcome to The 11/11 Portal</h2><button type="button" class="wel-x" data-act="welskip" aria-label="Close">✕</button></div><div class="wel-body"><p>Your private home for Hyrox-style training at home and for growing in all 11 areas of life, all in one place. No account needed, and what you enter is saved on this device.</p><p style="margin:-4px 0 14px"><span style="display:inline-block;background:var(--card2);border:1px solid var(--line);border-radius:999px;padding:5px 12px;font-size:13px;font-weight:700;color:var(--red2)">Free and open source</span> <a href="https://github.com/Ethioguy/portal-1111" target="_blank" rel="noopener noreferrer" style="font-size:13px;margin-left:6px">View the code on GitHub</a></p>'
+          ['<path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/>',"See your progress and keep it safe","Stats shows your streaks and miles. Your entries are saved to your device; back them up in Setup."]];
+  o.innerHTML='<div class="wel" role="dialog" aria-modal="true" aria-labelledby="welt"><div class="wel-head"><h2 id="welt">Welcome to The 11/11 Portal for Wellness</h2><button type="button" class="wel-x" data-act="welskip" aria-label="Close">✕</button></div><div class="wel-body"><p>Your private home for Hyrox-style training at home and for growing in all 11 areas of life, all in one place. No account needed. What you enter is saved to your device only: we collect and save no data.</p><p style="margin:-4px 0 14px"><span style="display:inline-block;background:var(--card2);border:1px solid var(--line);border-radius:999px;padding:5px 12px;font-size:13px;font-weight:700;color:var(--red2)">Free and open source</span> <a href="https://github.com/Ethioguy/portal-1111" target="_blank" rel="noopener noreferrer" style="font-size:13px;margin-left:6px">View the code on GitHub</a></p>'
     +st.map(function(x,i){return'<div class="wel-step">'+welIc(x[0])+'<div><small>STEP '+(i+1)+'</small><b>'+x[1]+'</b><span>'+x[2]+'</span></div></div>';}).join("")
     +'<button type="button" class="btn wel-go" data-act="welgo" id="welgo">Get Started →</button><button type="button" class="wel-skip" data-act="welskip">Skip introduction</button></div></div>';
   document.body.appendChild(o);var b=document.getElementById("welgo");if(b)b.focus();}
 function welcomeEnd(){var o=document.getElementById("welcome");if(o)o.remove();try{localStorage.setItem("portal.toured","1");}catch(e){}}
 // ---- guided tour ----
 var TOUR=[
- {v:null,t:"Welcome to The 11/11 Portal",x:"Your private home for training and your 11 life areas. This quick tour shows you around. Everything you enter stays on this device."},
+ {v:null,t:"Welcome to The 11/11 Portal for Wellness",x:"Your private home for training and your 11 life areas. This quick tour shows you around. Everything you enter stays on this device."},
  {v:"today",sel:'.nav [data-v="today"]',t:"Today",x:"Your daily home: today’s plan, run log, workout checklist, life check-ins and habits."},
  {v:"today",sel:'[data-act="rundone"]',t:"Log your run",x:"Choose Run or Bike, enter miles and minutes, then tap here. Pace is worked out for you."},
  {v:"today",sel:'[data-act="starttimer"]',t:"Workout + timer",x:"Tick each exercise as you go. Start timer opens the right rest timer for today’s session."},
@@ -756,7 +840,7 @@ function vSetup(){
   h+='<section class="card"><h2>Sync my devices</h2><p class="muted small" style="margin:6px 0 10px">Keep your iPhone and Mac in step with a locked sync file. Save it to iCloud Drive (or AirDrop it), then open it on your other device. Use the same passphrase on both.</p><label class="f">Passphrase (at least 10 characters)<input type="password" id="syncpass" autocomplete="new-password"></label><div class="row" style="margin-top:10px"><button type="button" class="btn block" data-act="syncsave">Save sync file</button><label class="btn ghost block" style="display:flex;align-items:center;justify-content:center;cursor:pointer">Open sync file<input class="sr" type="file" accept=".json,application/json" id="syncfile"></label></div>'+(syncMsg?'<p class="small" style="margin:8px 0 0" role="status">'+esc(syncMsg)+'</p>':'')+'<p class="note">Privacy: the file is encrypted on this device (AES-256) before it is saved. Without your passphrase nobody, including Apple, can read it. The passphrase is never stored, and if you lose it the file can’t be opened. Photos are not included.</p></section>';
   h+='<section class="card"><h2>Privacy</h2><ul class="small" style="margin:8px 0 0;padding-left:18px;line-height:1.6"><li>No accounts, no server, no analytics, no ads, no trackers.</li><li>Everything you enter, including photos, stays in this browser on this device.</li><li>Watch import: numbers from your watch arrive in the part of the link after #, which is never sent to any server, and are saved only when you tap Save.</li><li>Optional: when you tap Show suggestions (cover photos) or Show photos (exercises), your device asks Openverse for openly licensed photos, sending only the search words.</li><li>Anyone who can open this browser can see your entries. Lock your device, and avoid using shared computers.</li><li>Backups contain your personal data. Store them privately and never post them online.</li><li>Clearing your browser data also deletes your entries, so keep a backup.</li></ul><button type="button" class="btn ghost block" style="margin-top:12px;color:#A3261A;border-color:#E7B6AE" data-act="wipe">'+(wipeArm?'Tap again to permanently delete everything':'Delete all my data on this device')+'</button></section>';
   h+=whyCard();
-  h+='<section class="card"><h3>About</h3><p class="tiny" style="margin:4px 0 0">Public edition. Your data never leaves this device.</p><p class="small muted">The 11/11 Portal is a personal life and training log, kicked off on 11.11.2026 at 11:11 PM, for Hyrox-style prep at home: resistance bands, two adjustable dumbbells, a pull-up bar, a Maxi Climber, a bike and a daily 2–3 mile run. General guidance, not medical advice.</p></section>';
+  h+='<section class="card"><h3>About</h3><p class="tiny" style="margin:4px 0 0">Public edition. Your data never leaves this device.</p><p class="small muted">The 11/11 Portal for Wellness is a personal life and training log, kicked off on 11.11.2026 at 11:11 PM, for Hyrox-style prep at home: resistance bands, two adjustable dumbbells, a pull-up bar, a Maxi Climber, a bike and a daily 2–3 mile run. General guidance, not medical advice.</p></section>';
   return h;
 }
 
@@ -766,7 +850,7 @@ function render(){
   document.querySelectorAll("details.lc[open] .ck").forEach(function(x){openCats[x.getAttribute("data-v")]=1;});document.querySelectorAll("details.lc:not([open]) .ck").forEach(function(x){delete openCats[x.getAttribute("data-v")];});
   renderNav();
   var v=document.getElementById("view");
-  v.innerHTML=view==="today"?vToday():view==="timer"?vTimer():view==="week"?vWeek():view==="progress"?vProgress():view==="life"?vLife():view==="coach"?vCoach():view==="guide"?vGuide():vSetup();
+  v.innerHTML=view==="today"?vToday():view==="timer"?vTimer():view==="week"?vWeek():view==="progress"?vCommand():view==="life"?vLife():view==="coach"?vCoach():view==="guide"?vGuide():vSetup();
   if(view==="today"){var ta=v.querySelector('[data-in="notes"]');if(ta)ta.value=day(sel).notes||"";}
   if(view==="life"){v.querySelectorAll("details.lc").forEach(function(dd){var c=dd.querySelector(".ck").getAttribute("data-v");if(openCats[c])dd.open=true;});var L=lifeCfg();v.querySelectorAll("textarea[data-lv]").forEach(function(t){t.value=L._lv[t.getAttribute("data-lv")]||"";});v.querySelectorAll("textarea[data-bnotes]").forEach(function(t){t.value=L[t.getAttribute("data-bnotes")].notes||"";});loadImgs(v);var cur=v.querySelector(".hexbtn[aria-current]");if(cur)try{cur.scrollIntoView({inline:"center",block:"nearest"});}catch(x){}v.querySelectorAll("textarea[data-lf]").forEach(function(t){t.value=L[t.getAttribute("data-c")][t.getAttribute("data-lf")]||"";});}
   if(view!=="guide"){var f=document.createElement("button");f.type="button";f.id="helpfab";f.className="fab";f.setAttribute("data-act","helpopen");f.setAttribute("aria-label","Help: ask the guide");f.innerHTML='<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M9.5 9a2.5 2.5 0 1 1 3.5 2.3c-.6.3-1 .8-1 1.5v.7M12 17h.01"/></svg>';document.body.appendChild(f);}
@@ -831,6 +915,9 @@ document.addEventListener("click",function(e){
     case"tourskip":tourEnd();break;
     case"welgo":welcomeEnd();tourShow(1);break;
     case"welskip":welcomeEnd();break;
+    case"stab":statsTab=v;render();window.scrollTo(0,0);break;
+    case"refl":state.settings.refl=(state.settings.refl||[]).filter(function(r){return r.d!==todayKey();}).concat([{d:todayKey(),v:+v}]).slice(-60);persist(null);render();toast("Check-in saved");break;
+    case"ccshare":(function(){var t=shareText();if(navigator.share){navigator.share({text:t}).catch(function(){});}else if(navigator.clipboard){navigator.clipboard.writeText(t).then(function(){toast("Copied to clipboard");},function(){toast("Could not copy");});}else toast("Sharing is not available here");})();break;
     case"artpause":(function(){var sv=document.querySelector(".exart svg");if(!sv||!sv.pauseAnimations)return;var on=sv.animationsPaused();if(on)sv.unpauseAnimations();else sv.pauseAnimations();b.textContent=on?"Pause animation":"Play animation";b.setAttribute("aria-pressed",on?"false":"true");})();break;
     case"gask":guideAsk(v);break;
     case"gogo":helpOpen=false;view=v;render();window.scrollTo(0,0);break;
