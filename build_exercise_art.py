@@ -498,6 +498,7 @@ NAMES = {  # exercise names in the plan -> drawing key
 # ---------- animated line figure (original design): one simple line person that moves from start to finish ----------
 AW, ACX = 300, 150          # animation canvas width and centre
 INKA, FARA = "#10221A", "#9AA6A1"
+SHIRT, TORSO_W = INKA, 15   # the body: a solid block from hips to shoulders
 DUR = "3.6s"; KT = "0;0.2;0.5;0.7;1"; KS = "0 0 1 1;.4 0 .6 1;0 0 1 1;.4 0 .6 1"
 
 def anim(attr, a, b):
@@ -534,10 +535,16 @@ def stick(p, ps, front=False, gy=None):
     t = math.radians(ps["t"]); up = (math.cos(t), math.sin(t)); face = (-up[1], up[0])
     h, n = p["hip"], p["neck"]
     a = math.radians(ps["t"] - 90); c = ((h[0] + n[0]) / 2 + ps["bend"] * math.cos(a), (h[1] + n[1]) / 2 + ps["bend"] * math.sin(a))
-    spine = _q(h, c, n, 4)
-    def pl(pts, c, w): return f'<polyline points="{" ".join(f"{x},{y}" for x, y in pts)}" fill="none" stroke="{c}" stroke-width="{w}"/>'
+    spine = _q(h, c, p["sh"], 4)   # the body block stops at the shoulders so it meets the head cleanly
+    def pl(pts, c, w, join="miter"): return f'<polyline points="{" ".join(f"{x},{y}" for x, y in pts)}" fill="none" stroke="{c}" stroke-width="{w}" stroke-linejoin="{join}" stroke-miterlimit="3"/>'
     leg = lambda k: [p["hip"], p["k" + k], p["f" + k], p["t" + k]]
-    arm = lambda k: [p["sh"], p["e" + k], p["w" + k]]
+    def hand(k):
+        """A short hand past the wrist: flat on the floor when the wrist is down, otherwise in line with the forearm."""
+        e, w = p["e" + k], p["w" + k]; dx, dy = w[0] - e[0], w[1] - e[1]; L = math.hypot(dx, dy) or 1
+        if gy is not None and w[1] >= gy - 1.5:
+            sx = face[0] if abs(face[0]) > .3 else dx; return P(w[0] + (7 if sx >= 0 else -7), w[1])
+        return P(w[0] + dx / L * 7, w[1] + dy / L * 7)
+    arm = lambda k: [p["sh"], p["e" + k], p["w" + k], hand(k)]
     hd = p["head"]
     # the face tilts with the body, but only part of the way (max 38 degrees), so the smile always stays readable
     lean = (ps["t"] + 90 + 180) % 360 - 180
@@ -548,8 +555,8 @@ def stick(p, ps, front=False, gy=None):
     def eye(dx):
         x, y = at(dx, -2.6).split(","); return f'<circle cx="{x}" cy="{y}" r="1.5" fill="{INKA}"/>'
     smile = eye(-3.4) + eye(3.4) + f'<path d="M{at(-4.8, 1.6)} Q{at(0, 7.4)} {at(4.8, 1.6)}" fill="none" stroke="{INKA}" stroke-width="2"/>'
-    return (pl(arm("2"), FARA, 4) + pl(leg("2"), FARA, 4.5) + pl(spine, INKA, 5.5) + pl(leg("1"), INKA, 5)
-            + f'<circle cx="{hd[0]}" cy="{hd[1]}" r="{HEAD_R}" fill="#FFFFFF" stroke="{INKA}" stroke-width="3.5"/>' + smile + pl(arm("1"), INKA, 4.5))
+    return (pl(arm("2"), FARA, 4) + pl(leg("2"), FARA, 4.5) + pl(spine, SHIRT, TORSO_W, "round") + pl(leg("1"), INKA, 5)
+            + f'<circle cx="{hd[0]}" cy="{hd[1]}" r="{HEAD_R}" fill="#FFFFFF" stroke="{INKA}" stroke-width="2"/>' + smile + pl(arm("1"), "#FFFFFF", 8, "round") + pl(arm("1"), INKA, 4.5))
 
 # ---------- pose checker: contact points and joint limits ----------
 # Normal adult ranges (CDC Normal Joint Range of Motion Study, ages 20-44, rounded; shoulder extension and elbow from
@@ -591,7 +598,7 @@ def joint_angles(ps):
 _UP = {}
 def eff_y(pts, j):
     if j in ("f1", "f2"): return max(pts[j][1], pts["t" + j[1]][1]) + 2.5   # a foot touches with its heel or its toes
-    return pts[j][1] + (HEAD_R + 1.75 if j == "head" else 2.5) + _UP.get(j, 0)
+    return pts[j][1] + (HEAD_R + 1.75 if j == "head" else TORSO_W / 2 if j in ("hip", "sh") else 2.5) + _UP.get(j, 0)
 def lowest(pts): return max(eff_y(pts, j) for j in pts)
 def _get(ps): return [ps[k] if i is None else ps[k][i] for k, i in VARS]
 def _set(ps, v):
