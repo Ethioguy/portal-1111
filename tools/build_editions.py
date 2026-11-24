@@ -1,4 +1,4 @@
-"""Builds the two editions of The 11/11 Portal from app.src.html.
+"""Builds the two editions of The 11/11 Portal for Wellness from app.src.html.
 
 public   -> index.html                        Option 1 only. No AI connection code, no third-party
                                               requests (system fonts), strict Content-Security-Policy.
@@ -19,10 +19,11 @@ def unmark(html, tag):
     return html.replace("/*@" + tag + "*/\n", "").replace("/*@/" + tag + "*/\n", "").replace("/*@" + tag + "*/", "").replace("/*@/" + tag + "*/", "")
 
 FONTS = re.compile(r'<link rel="preconnect" href="https://fonts.googleapis.com">\n?<link href="https://fonts.googleapis.com/css2[^"]*" rel="stylesheet">\n?')
-CSP_PUBLIC = ("default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; "
-              "font-src 'self'; connect-src 'self'; worker-src 'self'; manifest-src 'self'; base-uri 'none'; form-action 'none'; object-src 'none'")
+CSP_PUBLIC = ("default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob: https://api.openverse.org; "
+              "font-src 'self'; connect-src 'self' https://api.openverse.org; worker-src 'self'; manifest-src 'self'; base-uri 'none'; form-action 'none'; object-src 'none'")
 CSP_PERSONAL = ("default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; "
-                "img-src 'self' data: blob:; font-src https://fonts.gstatic.com; connect-src https://api.anthropic.com; "
+                "img-src 'self' data: blob: https://api.openverse.org; font-src https://fonts.gstatic.com; connect-src https://api.anthropic.com https://api.openverse.org; "
+                "frame-src https://www.youtube-nocookie.com; "
                 "base-uri 'none'; form-action 'none'; object-src 'none'")
 
 def head_extra(csp):
@@ -39,13 +40,13 @@ base = strip(src, "CLOUD")
 public = FONTS.sub("", strip(base, "P2"))
 public = public.replace("<meta charset=\"utf-8\">\n", "<meta charset=\"utf-8\">\n" + head_extra(CSP_PUBLIC), 1)
 public = label(public, "Public edition. Your data never leaves this device.")
-for banned in ("api.anthropic.com", "x-api-key", "fonts.googleapis.com", "claude.use("):
+for banned in ("api.anthropic.com", "x-api-key", "fonts.googleapis.com", "claude.use(", "youtube-nocookie", "VIDS="):
     assert banned not in public, f"public edition must not contain {banned}"
 (ROOT / "index.html").write_text(public)
 
 personal = unmark(base, "P2")
 personal = personal.replace("<meta charset=\"utf-8\">\n", "<meta charset=\"utf-8\">\n" + head_extra(CSP_PERSONAL), 1)
-personal = personal.replace("<title>The 11/11 Portal", "<title>[Personal] The 11/11 Portal", 1)
+personal = personal.replace("<title>The 11/11 Portal for Wellness", "<title>[Personal] The 11/11 Portal for Wellness", 1)
 personal = label(personal, "Personal edition. For your own device only; do not upload or share this file.")
 (ROOT / "private").mkdir(exist_ok=True)
 (ROOT / "private" / "PERSONAL-portal.html").write_text(personal)
