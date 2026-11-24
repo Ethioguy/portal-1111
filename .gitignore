@@ -1,0 +1,20 @@
+# Personal edition (has your own AI connection). Keep it on your devices only.
+private/
+*PERSONAL*
+
+# Your data: encrypted sync files and backups
+portal-sync-*.json
+*backup*.json
+!ai/sample_data/demo_backup.json
+
+# Keys and local settings
+.env
+.env.*
+*.key
+*.pem
+
+# Python and OS clutter
+__pycache__/
+*.pyc
+.pytest_cache/
+.DS_Store
