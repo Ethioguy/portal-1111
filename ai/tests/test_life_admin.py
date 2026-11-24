@@ -60,3 +60,22 @@ def test_export_matches_web_contract():
     w = la.export_for_web()
     assert [h["key"] for h in w["hats"]] == la.HAT_KEYS and w["n"] == 3
     assert {t["key"] for t in w["tri"]} == {"do", "plan", "pass", "drop"}
+
+
+def test_split_brain_dump_from_voice():
+    said = ("Call the registrar about the tuition form Friday. Also pay the water bill tomorrow, "
+            "and then email the client report. New idea teff pancakes at the farmers market. "
+            "Plan next week with Alex")
+    got = la.split_dump(said)
+    assert got == ["Call the registrar about the tuition form Friday", "pay the water bill tomorrow",
+                   "email the client report", "idea: teff pancakes at the farmers market",
+                   "Plan next week with Alex"]
+    items = [la.parse(x, TUE) for x in got]
+    assert [i["hat"] for i in items[:3]] == ["college", "home", "work"]
+    assert items[3]["kind"] == "idea" and items[4]["due"] == "2026-11-30"
+
+
+def test_split_lists_and_bullets():
+    assert la.split_dump("- buy milk\n- fix door\n1. call mom") == ["buy milk", "fix door", "call mom"]
+    assert la.split_dump("one thing only") == ["one thing only"]
+    assert la.split_dump("  ") == []

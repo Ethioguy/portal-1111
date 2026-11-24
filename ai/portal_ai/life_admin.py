@@ -50,6 +50,10 @@ TRIAGE = [
     {"key": "drop", "label": "Drop", "hint": "It doesn't matter enough. Let it go."},
 ]
 
+# Spoken or typed cues that start a new item in a brain dump (voice or text).
+SPLIT_WORDS = ["next task", "next item", "new task", "another task", "another thing", "and then", "also"]
+IDEA_STARTS = ["new idea", "another idea", "idea"]
+
 WEEKDAYS = ["mon", "tue", "wed", "thu", "fri", "sat", "sun"]
 TODAY_COUNT = 3
 
@@ -114,6 +118,35 @@ def _due(low: str, today: date) -> date | None:
         if re.search(r"\b" + w + r"[a-z]*\b", low):
             return today + timedelta(days=(i - today.weekday()) % 7 or 7)
     return None
+
+
+def split_dump(text: str) -> list[str]:
+    """Split a brain dump (dictated or typed) into one line per task or idea.
+
+    Splits on new lines, bullets and numbers, sentence ends, and spoken cues such as
+    'also', 'and then', 'next task' or 'new idea'. A piece that starts with 'idea' or
+    'new idea' becomes 'idea: ...' so it is filed as an idea."""
+    t = re.sub(r"[•‣◦*]", "\n", text or "")
+    t = re.sub(r"(?m)^\s*(?:-|\d{1,2}[.)])\s+", "\n", t)
+    t = re.sub(r"(?<=[.!?;])\s+", "\n", t)
+    cues = sorted(SPLIT_WORDS + [c for c in IDEA_STARTS if " " in c], key=len, reverse=True)
+    t = re.sub(r"[,;]?\s+(?=(?:" + "|".join(re.escape(c) for c in cues) + r")\b)", "\n", t, flags=re.I)
+    out = []
+    for piece in t.split("\n"):
+        piece = piece.strip(" \t,;.-")
+        low = piece.lower()
+        for c in sorted(SPLIT_WORDS, key=len, reverse=True):
+            if low.startswith(c + " ") or low == c:
+                piece = piece[len(c):].strip(" ,:")
+                low = piece.lower()
+                break
+        for c in IDEA_STARTS:
+            if low.startswith(c + " ") or low.startswith(c + ":"):
+                piece = "idea: " + piece[len(c):].strip(" ,:")
+                break
+        if len(piece) >= 3:
+            out.append(piece[:300])
+    return out
 
 
 def is_open(it: dict) -> bool:
@@ -184,4 +217,4 @@ def ai_summary(items: list[dict]) -> str:
 
 def export_for_web() -> dict:
     return {"hats": HATS, "def": DEFAULT_HAT, "idea": IDEA_PREFIXES, "tri": TRIAGE, "wd": WEEKDAYS,
-            "n": TODAY_COUNT, "msg": ONE_CALL_MESSAGE, "prompt": AI_PROMPT}
+            "n": TODAY_COUNT, "split": SPLIT_WORDS, "ideaStarts": IDEA_STARTS, "msg": ONE_CALL_MESSAGE, "prompt": AI_PROMPT}
