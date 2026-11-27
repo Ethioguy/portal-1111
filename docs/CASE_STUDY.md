@@ -141,3 +141,13 @@ These map to the Govern, Map, Measure and Manage functions of the NIST AI Risk M
 ---
 
 *Built with AI pair-programming assistance (Claude). The life-area structure is inspired by common life-planning frameworks. The name comes from the "11/11 portal" fresh-start tradition.*
+
+## Data and AI practice
+
+The governance claims are small enough to verify and are enforced in the build rather than asserted in prose.
+
+- One network request loads the app. No analytics, trackers, third-party fonts or scripts.
+- The published edition contains no AI connection code: `tools/build_editions.py` asserts it, and CI runs that build on every push. The optional coach lives only in a personal edition that is never published.
+- Two optional outbound calls, both user-initiated: an Openverse search that sends only search words, and streaming a track from its publisher.
+- Data minimisation by architecture rather than policy — there is no server, so there is no copy to breach, subpoena or sell. The cost is that nothing syncs and nothing can be recovered for the user, which the app states plainly and mitigates with backup reminders.
+- Not assessed against any named AI governance framework. The claims are checkable in the source; that is the whole of the assurance offered.

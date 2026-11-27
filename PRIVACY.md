@@ -30,3 +30,11 @@ Runs on your own machine against a backup file you choose. Search runs locally; 
 - Don't post screenshots or backups that show personal entries.
 
 General fitness guidance, not medical advice. Questions or a security concern: open an issue on GitHub without including any personal data.
+
+## Data and AI practice
+
+- **One network request** loads the app: the page itself. No analytics, no trackers, no third-party fonts or scripts.
+- **No AI in the public build.** `tools/build_editions.py` asserts that the published edition contains no AI connection code, no API-key handling and no third-party embeds, and CI runs that build on every push. The optional coach exists only in a personal edition that is never published.
+- **Two optional outbound calls**, both started by you: searching Openverse sends your search words only; playing a publisher's track streams it from their server, which sees your IP as any website would. Neither sends anything you have typed, and no audio or image is stored in this repository.
+- **Architecture, not policy.** There is no server, so there is no copy of your data to breach, subpoena or sell. The cost is that nothing syncs and nothing can be recovered for you — which is why the app asks you to back up rather than pretending the problem away.
+- **Not assessed against any named AI governance framework.** The claims above are checkable in the source; that is the whole of the assurance offered.

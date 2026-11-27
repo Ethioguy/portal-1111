@@ -53,6 +53,25 @@ python3 tools/build_config.py && python3 tools/build_editions.py
 
 Full guide, including what is *not* configurable yet: [docs/ADOPTING.md](docs/ADOPTING.md).
 
+## Data and AI practice
+
+Three claims, each enforced by something in this repository rather than promised here.
+
+- **No account, no server, no analytics.** There is no backend. Loading the app makes exactly one network request: the page itself.
+- **Your entries never leave your device.** They live in `localStorage`, your photos and audio in IndexedDB, both per-device and per-origin. Nothing is transmitted, so nothing can be breached, subpoenaed or sold at the author's end — there is no "author's end".
+- **The public build contains no AI connection code at all.** `tools/build_editions.py` asserts it, so a change that added any would fail the build, and CI runs that build on every push. The one AI feature exists only in a personal edition kept off this repository, using the owner's own API key.
+
+Two outbound calls exist. Both are optional, both start with a tap, and neither sends anything you have typed:
+
+| Call | What leaves the device | When |
+|---|---|---|
+| Openverse search (`api.openverse.org`) | your search words | only when you search for a cover photo or music |
+| Streaming a track | nothing but the request itself; the publisher's server sees your IP, as any website does | only when you choose a track and start a session |
+
+**What this costs you, said plainly.** Nothing syncs between your devices, and there is no password reset, because there is no account to reset. Clearing site data erases the log. The app says this in the open, reminds you to back up on a cadence you choose, and offers three ways out: the clipboard, a dated file, and the printed book — which is readable in twenty years by anything, with or without this app.
+
+**On "AI for good".** The claim here is narrow and checkable: data minimisation and user control achieved by architecture rather than by policy. There is no data on a server because there is no server. This project has not been assessed against any named AI governance framework, and says so rather than implying otherwise. It is MIT licensed, so you can verify every line above instead of trusting it.
+
 ## Build it yourself
 
 ```bash
