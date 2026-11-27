@@ -15,7 +15,7 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 from portal_ai.guardrails import needs_medical_referral, redact  # noqa: E402
 from portal_ai.store import Store  # noqa: E402
-from portal_ai.tools import Toolbox  # noqa: E402
+from portal_ai.tools import TOOL_SCHEMAS, Toolbox  # noqa: E402
 
 DEMO = ROOT / "sample_data" / "demo_backup.json"
 THRESHOLDS = {"recall@3": 0.85, "mrr": 0.75}
@@ -90,7 +90,12 @@ async def _mcp_roundtrip() -> list[tuple[str, bool]]:
             txt = json.dumps([c.model_dump() for c in res.content])
             w_res = await s.call_tool("log_run", {"day": "2026-12-02", "miles": 2, "minutes": 22})
             preview = "needs_confirmation" in json.dumps([c.model_dump() for c in w_res.content])
-    return [("server lists 6 tools over stdio", len(tools) == 6), ("search returns cited id over MCP", "note:2026-11-11:0" in txt),
+    # Derived from the toolbox, never a hardcoded count: adding a tool must not need this file edited,
+    # and a tool that fails to reach the server must fail the eval.
+    expected = {t["name"] for t in TOOL_SCHEMAS}
+    missing = sorted(expected - tools)
+    label = f"server lists all {len(expected)} tools over stdio" + (f" (missing: {', '.join(missing)})" if missing else "")
+    return [(label, tools == expected), ("search returns cited id over MCP", "note:2026-11-11:0" in txt),
             ("write over MCP previews first", preview)]
 
 

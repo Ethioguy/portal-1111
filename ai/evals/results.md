@@ -1,6 +1,6 @@
 # Eval results
 
-Data: synthetic demo set (54 indexed entries). Generated 2026-11-12.
+Data: synthetic demo set (54 indexed entries). Generated 2026-11-27.
 
 ## 1. Retrieval (BM25 + query expansion, offline)
 
@@ -52,7 +52,7 @@ Data: synthetic demo set (54 indexed entries). Generated 2026-11-12.
 
 | Check | Result |
 |---|---|
-| server lists 6 tools over stdio | ✅ pass |
+| server lists all 9 tools over stdio | ✅ pass |
 | search returns cited id over MCP | ✅ pass |
 | write over MCP previews first | ✅ pass |
 
