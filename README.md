@@ -25,6 +25,8 @@ Nothing to sign up for. Everything you type stays in your browser's own storage 
 | **Meditation & focus** | Guided sessions timed to your chosen length, your vision-board photos fading behind the words, with optional background music that repeats or stops when the session ends |
 | **Recipes & nutrition** | Meals built around the training week |
 | **Inbox** | Capture tasks and ideas in one line, by voice or text; area, day and person are inferred |
+| **Watch import** | Runs and rides from Apple Health, Garmin or Strava, via a Shortcut or any JSON/CSV export. Swims, lifts and walks are skipped so they can't overwrite a training day |
+| **Backup reminders** | Nothing syncs, by design — so the app asks on your own cadence, and offers clipboard, a dated file, or the PDF book |
 
 ## Privacy
 
@@ -34,6 +36,11 @@ This is the whole point, so it's worth being precise. See [PRIVACY.md](PRIVACY.m
 - **Your entries** live in `localStorage`; **your photos and audio** in IndexedDB. Both are per-device and per-origin. Clearing site data erases them, so use **Setup → Copy backup** before you do.
 - **Two network calls exist, both optional and both started by you:** searching Openverse for cover photos or music sends only your search words; playing a publisher's track streams it from that publisher's server. No audio or image is stored in this repository.
 - **The strict Content-Security-Policy** in the published build blocks any other outbound connection. If a future change tried to phone home, the build would break.
+- **Nothing syncs between your devices, deliberately.** There is no server to hold a copy, so backing up is yours to do. The app reminds you on a cadence you choose and gives you three ways out: clipboard, a dated file, or the printed book.
+
+### Accessibility
+
+Audited with axe-core across all five views: **zero violations**. Passes WCAG reflow at 320 CSS px, respects `prefers-reduced-motion`, every control is 44px or larger, visible focus throughout, and no nested interactive controls. What that does *not* mean: no one has yet driven this with VoiceOver, NVDA or a switch device, and automated tools catch perhaps a third of real barriers. Help with that is the contribution I'd most value.
 
 ## Make it yours
 
