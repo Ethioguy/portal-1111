@@ -5,7 +5,7 @@ contract: without confirm=True they only return a preview of the change."""
 from __future__ import annotations
 from datetime import date
 
-from . import plan
+from . import life_guide, plan
 from .guardrails import redact
 from .rag import Index, build_docs
 from .store import AREAS, Store
@@ -63,7 +63,7 @@ class Toolbox:
         return out
 
     def life_area_status(self) -> list[dict]:
-        """Rating (1-10) and how many plan items are written for each of the 12 life areas."""
+        """Rating (1-10) and how many plan items are written for each of the 11 life areas."""
         areas = self.store.areas()
         out = []
         for a, name in AREAS:
@@ -71,7 +71,20 @@ class Toolbox:
             pv = v.get("pv") or {}
             out.append({"area": a, "name": name, "rating": int(v["rating"]) if v.get("rating") else None,
                         "items_written": sum(len([i for i in pv.get(s, []) if i]) for s in ("premise", "vision", "purpose", "strategy"))})
-        self._log("life_area_status", {}, "12 areas")
+        self._log("life_area_status", {}, "11 areas")
+        return out
+
+    def life_coach_step(self, area: str, step: int = 0) -> dict:
+        """One step of the guided coaching for a life area: 0 learn, 1 premise, 2 vision, 3 purpose, 4 strategy, 5 commit."""
+        out = life_guide.step(area, int(step))
+        self._log("life_coach_step", {"area": area, "step": int(step)}, out["title"])
+        return out
+
+    def suggest_life_area(self) -> dict:
+        """The life area to coach next (least written, then lowest rating), with its first step."""
+        a = life_guide.suggest_next(self.life_area_status())
+        out = life_guide.step(a, 0)
+        self._log("suggest_life_area", {}, a)
         return out
 
     # ---------- write tools (human-in-the-loop) ----------
@@ -97,6 +110,19 @@ class Toolbox:
         return {"status": "saved", "checked_in": areas}
 
 
+    def save_life_statement(self, area: str, section: str, text: str, confirm: bool = False) -> dict:
+        """Add a Premise/Vision/Purpose/Strategy statement to a life area. Returns a preview unless confirm=True."""
+        change = {"area": area, "section": section, "text": text}
+        if not confirm:
+            self._log("save_life_statement", change, "preview")
+            return {"status": "needs_confirmation", "preview": change,
+                    "message": "Read the statement back to the user; save only after they approve."}
+        items = self.store.add_statement(area, section, text)
+        self._index = None
+        self._log("save_life_statement", change, "written")
+        return {"status": "saved", "area": area, "section": section, "items": items}
+
+
 # JSON schemas for LLM tool calling (Anthropic format)
 TOOL_SCHEMAS = [
     {"name": "get_plan", "description": "Get the planned run and workout for a date.",
@@ -105,7 +131,7 @@ TOOL_SCHEMAS = [
      "input_schema": {"type": "object", "properties": {"query": {"type": "string"}, "k": {"type": "integer", "minimum": 1, "maximum": 10}}, "required": ["query"]}},
     {"name": "week_summary", "description": "Miles, sessions and life-area check-ins for the week containing a date.",
      "input_schema": {"type": "object", "properties": {"day": {"type": "string"}}, "required": ["day"]}},
-    {"name": "life_area_status", "description": "Ratings and plan completeness for the 12 life areas.",
+    {"name": "life_area_status", "description": "Ratings and plan completeness for the 11 life areas.",
      "input_schema": {"type": "object", "properties": {}}},
     {"name": "log_run", "description": "Log a run or bike ride. First call without confirm to get a preview; only set confirm=true after the user explicitly approves.",
      "input_schema": {"type": "object", "properties": {"day": {"type": "string"}, "miles": {"type": "number"}, "minutes": {"type": "number"},
@@ -114,4 +140,14 @@ TOOL_SCHEMAS = [
      "input_schema": {"type": "object", "properties": {"day": {"type": "string"}, "area": {"type": "string", "enum": [a for a, _ in AREAS]},
                       "confirm": {"type": "boolean"}}, "required": ["day", "area"]}},
 ]
-WRITE_TOOLS = {"log_run", "check_in_area"}
+TOOL_SCHEMAS += [
+    {"name": "life_coach_step", "description": "Get one step of guided coaching for a life area (0 learn, 1 premise, 2 vision, 3 purpose, 4 strategy, 5 commit). Teach one step at a time and ask its prompts.",
+     "input_schema": {"type": "object", "properties": {"area": {"type": "string", "enum": [a for a, _ in AREAS]}, "step": {"type": "integer", "minimum": 0, "maximum": 5}}, "required": ["area"]}},
+    {"name": "suggest_life_area", "description": "Suggest which life area to coach next and return its first step.",
+     "input_schema": {"type": "object", "properties": {}}},
+    {"name": "save_life_statement", "description": "Save a statement the user wrote to a life area section. Preview first; confirm=true only after the user approves the exact wording.",
+     "input_schema": {"type": "object", "properties": {"area": {"type": "string", "enum": [a for a, _ in AREAS]},
+                      "section": {"type": "string", "enum": ["premise", "vision", "purpose", "strategy"]}, "text": {"type": "string"},
+                      "confirm": {"type": "boolean"}}, "required": ["area", "section", "text"]}},
+]
+WRITE_TOOLS = {"log_run", "check_in_area", "save_life_statement"}

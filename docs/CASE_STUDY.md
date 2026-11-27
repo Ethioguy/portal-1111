@@ -1,4 +1,4 @@
-# Case Study: The 11/11 Portal
+# Case Study: Portal 11
 
 **An agent-ready, local-first life and training tracker, delivered with the PMI-CPMAI six-phase methodology**
 
@@ -9,7 +9,7 @@ Live app: https://ethioguy.github.io/portal-1111/ · Code: https://github.com/Et
 
 ## Summary
 
-The 11/11 Portal began as a personal tool: a 12-week, home-equipment training plan plus a daily check-in across 12 life areas. I then ran it as an AI project using the six CPMAI phases. The result adds four production-style AI pieces on top of the app:
+Portal 11 began as a personal tool: a 12-week, home-equipment training plan plus a daily check-in across 12 life areas. I then ran it as an AI project using the six CPMAI phases. The result adds four production-style AI pieces on top of the app:
 
 1. An **MCP server** that lets any MCP client (Claude Desktop, Claude Code, IDEs) read the plan and journal, and log activity safely.
 2. A **retrieval (RAG) pipeline** that grounds answers in the user's own entries and returns citable ids.

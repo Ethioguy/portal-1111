@@ -1,7 +1,7 @@
 [project]
 name = "portal-ai"
 version = "0.1.0"
-description = "AI layer for The 11/11 Portal: MCP server, RAG journal search, tool-using coach agent, FastAPI API and evals."
+description = "AI layer for Portal 11: MCP server, RAG journal search, tool-using coach agent, FastAPI API and evals."
 readme = "README.md"
 requires-python = ">=3.10"
 license = { text = "MIT" }

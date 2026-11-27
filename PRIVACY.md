@@ -1,6 +1,6 @@
 # Privacy
 
-The 11/11 Portal for Wellness is built so that nobody, including the project's author, can see your data.
+Portal 11 is built so that nobody, including the project's author, can see your data.
 
 ## Public edition (this website)
 - **No accounts, no server, no database.** Everything you enter, including photos, is stored only in your browser on your device.

@@ -92,3 +92,64 @@ def test_agent_medical_guardrail(box):
     from portal_ai.coach import Coach
     text, trace = Coach(box, client=FakeClient()).ask("I got dizzy and had chest pain, what workout now?")
     assert "doctor" in text and trace.steps[0]["guardrail"] == "medical_referral"
+
+
+def test_life_coach_steps_and_hitl(box):
+    from portal_ai import life_guide
+    assert len(life_guide.GUIDE) == 11 and "vision" not in life_guide.GUIDE
+    for a in life_guide.AREA_ORDER:
+        for n in range(6):
+            st = box.life_coach_step(a, n)
+            assert st["step"] == n and st["name"]
+        assert all(len(v) == 3 for v in life_guide.GUIDE[a]["prompts"].values())
+    pre = box.save_life_statement("fin", "strategy", "Review money every first Sunday")
+    assert pre["status"] == "needs_confirmation"
+    assert "Review money every first Sunday" not in (box.store.areas().get("fin", {}).get("pv", {}).get("strategy") or [])
+    ok = box.save_life_statement("fin", "strategy", "Review money every first Sunday", confirm=True)
+    again = box.save_life_statement("fin", "strategy", "review money every first sunday", confirm=True)
+    assert ok["status"] == "saved" and again["items"].count("Review money every first Sunday") == 1
+    assert box.suggest_life_area()["area"] in life_guide.GUIDE
+
+
+def test_vision_review_schedule():
+    from datetime import date
+    from portal_ai import vision_review as vr
+    sat, sun = date(2026, 11, 14), date(2026, 11, 15)
+    assert vr.last_scheduled("week", sat) == date(2026, 11, 8) and vr.next_scheduled("week", sat) == sun
+    assert vr.last_scheduled("week", sun) == sun
+    assert vr.last_scheduled("month", sat) == date(2026, 11, 1) and vr.next_scheduled("month", sat) == date(2026, 12, 6)
+    assert vr.last_scheduled("quarter", sat) == date(2026, 10, 4) and vr.next_scheduled("quarter", sat) == date(2027, 1, 3)
+    assert vr.is_due("week", sun, None) and vr.is_due("week", sun, sat) and not vr.is_due("week", sun, sun)
+    assert not vr.is_due("off", sun, None)
+    assert all(3 <= len(c["prompts"]) <= 5 for c in vr.CADENCES.values())
+
+
+def test_workbook_methods_have_sources():
+    from portal_ai import workbook as wb
+    assert len(wb.METHODS) == 5 and [e["key"] for e in wb.ENERGIZE] == ["en_out", "en_obs", "en_plan"]
+    for m in wb.METHODS:
+        assert m["do"] and m["why"] and m["limit"], m["key"]          # every method states its limits
+        assert m["url"].startswith("https://doi.org/") and "(" in m["source"], m["key"]
+    assert "lifebook" not in str(wb.export_for_web()).lower()
+
+
+def test_meditation_timeline_and_parser():
+    from portal_ai import meditation as md
+    v = md.SESSIONS[0]
+    assert abs(md.total_minutes(v["steps"], 13) - 13) < 0.2 and abs(md.total_minutes(v["steps"], 15) - 15) < 0.2
+    steps = md.parse_script("Breathe in. (Pause 10 seconds) Rest here. (pause 3 to 4 minutes in silence) Om.")
+    assert steps == [["Breathe in.", 10], ["Rest here.", 180], ["Om.", 8]]
+    tl = md.timeline(steps)
+    assert tl[0]["t"] == 0 and tl[1]["t"] > 10
+
+
+def test_meditation_music_is_never_bundled():
+    import pathlib
+    from portal_ai import meditation as md
+    assert md.MUSIC_LINKS[0]["title"] == "Amrit Vela"
+    for m in md.MUSIC_LINKS:
+        assert m["url"].startswith("https://www.brahmakumaris.com/meditation/meditation-music/")
+        assert m.get("stream", "https://media.brahmakumaris.com/").startswith("https://media.brahmakumaris.com/")
+    root = pathlib.Path(__file__).resolve().parents[2]            # the repo holds no audio files at all
+    assert not [f for f in root.rglob("*") if f.suffix.lower() in (".mp3", ".m4a", ".wav", ".ogg") and "private" not in f.parts]
+    assert md.SEARCH["api"].startswith("https://api.openverse.org/")

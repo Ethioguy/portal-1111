@@ -1,4 +1,4 @@
-"""Builds the 'My Portal' life-area pages for PORTAL 11:11.
+"""Builds the 'My Portal' life-area pages for Portal 11.
 Generates category data, hexagon icons and banner art, then injects them into index.html."""
 import json, math, re, sys
 

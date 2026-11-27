@@ -18,3 +18,12 @@ __pycache__/
 *.pyc
 .pytest_cache/
 .DS_Store
+
+# Photos and media you add locally
+Workout Photos/
+*.mov
+*.mp3
+*.m4a
+
+# Staging folders
+github-upload/

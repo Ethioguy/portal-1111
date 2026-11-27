@@ -16,3 +16,34 @@ jobs:
         if: ${{ env.ANTHROPIC_API_KEY != '' }}
         env: { ANTHROPIC_API_KEY: "${{ secrets.ANTHROPIC_API_KEY }}" }
         run: python evals/run_evals.py
+
+  build-is-reproducible:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: "3.12" }
+      - name: Rebuild the app from config.py and app.src.html
+        run: |
+          python3 tools/build_config.py
+          python3 tools/build_editions.py
+      - name: index.html must match what the source produces
+        run: |
+          if ! git diff --quiet -- index.html; then
+            echo "::error::index.html does not match app.src.html. Run python3 tools/build_editions.py and commit the result."
+            git diff --stat -- index.html
+            exit 1
+          fi
+
+  example-config-builds:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: "3.12" }
+      - name: A fork using the gym example must still build
+        run: |
+          cp config_examples/gym.py config.py
+          python3 tools/build_config.py
+          python3 tools/build_editions.py
+          grep -q "Iron &amp; Oak" index.html

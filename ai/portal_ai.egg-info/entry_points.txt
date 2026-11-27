@@ -1,0 +1,3 @@
+[console_scripts]
+portal-evals = evals.run_evals:main
+portal-mcp = portal_ai.mcp_server:main

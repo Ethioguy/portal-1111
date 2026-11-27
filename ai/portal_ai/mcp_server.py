@@ -1,4 +1,4 @@
-"""MCP server exposing The 11/11 Portal to any MCP client (Claude Desktop, Claude Code, IDEs).
+"""MCP server exposing Portal 11 to any MCP client (Claude Desktop, Claude Code, IDEs).
 
 Run:  PORTAL_DATA=path/to/backup.json portal-mcp     (stdio transport)"""
 from __future__ import annotations
@@ -40,7 +40,7 @@ def week_summary(day: str) -> dict:
 
 @server.tool(annotations=RO)
 def life_area_status() -> list[dict]:
-    """Rating and plan completeness for each of the 12 life areas."""
+    """Rating and plan completeness for each of the 11 life areas."""
     return box.life_area_status()
 
 
@@ -56,9 +56,27 @@ def check_in_area(day: str, area: str, confirm: bool = False) -> dict:
     return box.check_in_area(day, area, confirm)
 
 
+@server.tool(annotations=RO)
+def life_coach_step(area: str, step: int = 0) -> dict:
+    """One step of guided coaching for a life area: 0 learn, 1 premise, 2 vision, 3 purpose, 4 strategy, 5 commit."""
+    return box.life_coach_step(area, step)
+
+
+@server.tool(annotations=RO)
+def suggest_life_area() -> dict:
+    """Which life area to coach next, with its first step."""
+    return box.suggest_life_area()
+
+
+@server.tool(annotations=RW)
+def save_life_statement(area: str, section: str, text: str, confirm: bool = False) -> dict:
+    """Save a user's Premise/Vision/Purpose/Strategy statement. Preview unless confirm=true (only after the user approves)."""
+    return box.save_life_statement(area, section, text, confirm)
+
+
 @server.resource("portal://areas", name="life-areas", mime_type="application/json")
 def areas_resource() -> str:
-    """The 12 life areas and their ids."""
+    """The 11 life areas and their ids."""
     return json.dumps([{"id": a, "name": n} for a, n in AREAS])
 
 

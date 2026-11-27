@@ -1,4 +1,4 @@
-"""Eval harness for The 11/11 Portal AI layer.
+"""Eval harness for Portal 11 AI layer.
 
 Offline (always runs, used in CI):
   1. Retrieval quality  - recall@3 and MRR on a hand-labelled golden set

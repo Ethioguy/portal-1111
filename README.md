@@ -1,47 +1,91 @@
-# portal-ai — the AI layer of The 11/11 Portal for Wellness
+# Portal 11 · Hybrid Training & Life at Home
 
-Python package that turns the tracker into an agent-ready system.
+**Train for hybrid fitness racing at home, and keep the other ten areas of your life in the same place.** One HTML file. Works offline. No account, no server, no tracking — your data never leaves your device.
 
-| Component | File | What it does |
-|---|---|---|
-| Tool layer | `portal_ai/tools.py` | One set of typed tools shared by every surface; read tools are side-effect free, write tools preview first and only commit with `confirm=true`; every call is audit-logged |
-| MCP server | `portal_ai/mcp_server.py` | Exposes 6 tools + 1 resource over the Model Context Protocol, with read-only / write annotations |
-| RAG | `portal_ai/rag.py` | Builds documents from your entries, chunks them, BM25 retrieval with query expansion, optional embedding rerank; runs fully offline |
-| Coach agent | `portal_ai/coach.py` | Claude tool-use loop: plan → call tools → observe → answer with citations; step limit, token/latency trace, model can't approve its own writes |
-| Guardrails | `portal_ai/guardrails.py` | Redacts emails, phone and ID numbers before anything reaches a hosted model; refers pain/injury questions to a doctor |
-| API | `portal_ai/api.py` | FastAPI: `/health`, `/plan/{day}`, `/search`, `/summary/{day}`, `/areas`, `/coach` |
-| Evals | `evals/run_evals.py` | Retrieval recall@3 / MRR, tool contracts, guardrails, a real MCP stdio round trip, and live agent evals when a key is set |
+Hybrid racing rewards people who can run *and* push, pull, carry and lunge under fatigue. Most training apps handle the gym and ignore everything else. Portal 11 tracks the training and the eleven areas of a life that has to hold it up: health, career, money, family, friends, growth, spirit, home, giving, fun and adventure.
 
-## Quick start
+> I started this on 11.11.2026 at 11:11 PM as my own fresh start. I'm sharing it openly because I wish everyone their own 11:11 portal — a step through to the next chapter.
+
+## Use it
+
+Open the app, then add it to your home screen. That's the install — it then runs offline like a native app.
+
+Nothing to sign up for. Everything you type stays in your browser's own storage on that device.
+
+## What's in it
+
+| Area | What it does |
+|---|---|
+| **Training** | Daily run and workout plan, logged in one tap. Animated figures for all 43 movements, drawn from anthropometric segment ratios and clinical range-of-motion limits, so the positions are actually achievable |
+| **Command centre** | Streaks, miles, sessions and check-ins across every track, with medals and a shareable summary |
+| **11 life areas** | Premise, vision, purpose and strategy per area, with a satisfaction rating and a check-in |
+| **Living workbook** | A Sunday / monthly / quarterly visioning cadence, built on five published methods with sources cited in `ai/portal_ai/workbook.py` |
+| **Personal book** | Your whole workbook as a print-ready PDF with a photo-collage cover, versioned and date-stamped on every download |
+| **Vision board** | Your own pictures per area and sub-area, held in IndexedDB on your device |
+| **Meditation & focus** | Guided sessions timed to your chosen length, your vision-board photos fading behind the words, with optional background music that repeats or stops when the session ends |
+| **Recipes & nutrition** | Meals built around the training week |
+| **Inbox** | Capture tasks and ideas in one line, by voice or text; area, day and person are inferred |
+
+## Privacy
+
+This is the whole point, so it's worth being precise. See [PRIVACY.md](PRIVACY.md) for the detail.
+
+- **No account, no server, no analytics.** There is no backend to send anything to.
+- **Your entries** live in `localStorage`; **your photos and audio** in IndexedDB. Both are per-device and per-origin. Clearing site data erases them, so use **Setup → Copy backup** before you do.
+- **Two network calls exist, both optional and both started by you:** searching Openverse for cover photos or music sends only your search words; playing a publisher's track streams it from that publisher's server. No audio or image is stored in this repository.
+- **The strict Content-Security-Policy** in the published build blocks any other outbound connection. If a future change tried to phone home, the build would break.
+
+## Make it yours
+
+Nothing here is specific to hybrid racing or to eleven life areas. A gym, a club, a clinic or one person with different priorities changes `config.py` — the name, the sessions, the weekly plan, the areas — and rebuilds. `config_examples/gym.py` is a working alternative: a three-day strength block with six tracked areas and a different name.
+
 ```bash
-cd ai
-pip install -e ".[dev,coach]"
-pytest -q tests                  # unit tests
-python evals/run_evals.py        # writes evals/results.md
-uvicorn portal_ai.api:app        # http://127.0.0.1:8000/docs
+cp config_examples/gym.py config.py
+python3 tools/build_config.py && python3 tools/build_editions.py
 ```
 
-Your own data: in the web app open **Setup → Copy backup**, save it as JSON and point `PORTAL_DATA` at it. The demo data in `sample_data/` is synthetic.
+Full guide, including what is *not* configurable yet: [docs/ADOPTING.md](docs/ADOPTING.md).
 
-## Use it from Claude Desktop (MCP)
-Add to `claude_desktop_config.json`:
-```json
-{
-  "mcpServers": {
-    "the-11-11-portal": {
-      "command": "python",
-      "args": ["-m", "portal_ai.mcp_server"],
-      "cwd": "/path/to/portal-1111/ai",
-      "env": { "PORTAL_DATA": "/path/to/my-backup.json" }
-    }
-  }
-}
-```
-Then ask: *"What did I write about my grip, and what's my workout tomorrow?"*
+## Build it yourself
 
-## Coach agent
 ```bash
-export ANTHROPIC_API_KEY=...            # optional; everything else runs offline
-export PORTAL_MODEL=claude-sonnet-5-5   # pick the model by quality, latency and cost
-python -c "from portal_ai.coach import Coach; print(Coach().ask('How was my week?')[0])"
+git clone https://github.com/Ethioguy/portal-1111
+cd portal-1111
+python3 tools/build_config.py       # config.py  -> window.CFG + manifest
+python3 tools/build_editions.py     # app.src.html -> index.html
 ```
+
+`index.html` is a build artifact and is committed so the app can be served directly from the repo. CI fails if it does not match what `app.src.html` produces, so the published app and the source can't drift apart.
+
+```bash
+cd ai && pip install -e ".[dev]" && pytest -q tests    # 23 tests
+python evals/run_evals.py                              # offline evals: retrieval, tool contracts, guardrails, MCP
+```
+
+## How it's put together
+
+The content is generated by Python and injected into a single HTML page; the browser holds the UI and the data, and nothing else.
+
+```
+config.py             everything a fork changes: brand, sessions, weekly plan, areas
+app.src.html          single source; builds into index.html (public) and a personal edition
+tools/build_*.py      generators: config, exercise art, life areas, coaching, recipes,
+                      meditation, workbook, vision review, inbox — each injects a window.* block
+ai/portal_ai/         the Python layer: typed tools, guardrails, RAG, MCP server
+ai/tests/             23 tests
+ai/evals/             offline evals for retrieval, tool contracts, guardrails and MCP
+```
+
+Two editions build from the same source. The **public** edition is what ships here: strict CSP, no AI connection code, no third-party embeds. The **personal** edition adds an optional "bring your own Anthropic key" coach; it is gitignored and never published, because an edition that can call out is not an edition anyone should get from a stranger.
+
+The Python layer exists so the same logic serves the app, an MCP client and an agent without being rewritten three times. Write tools preview first and commit only with `confirm=true`; every call is audit-logged.
+
+## Contributing
+
+Issues and pull requests are welcome — see [CONTRIBUTING.md](CONTRIBUTING.md). To report something security-related, see [SECURITY.md](SECURITY.md).
+
+## Licence
+
+MIT — see [LICENSE](LICENSE). Do what you like with it; no warranty.
+
+Not affiliated with, endorsed by, or connected to HYROX, Brahma Kumaris, or any other organisation named in this repository. Those names appear only to describe what the app works with.

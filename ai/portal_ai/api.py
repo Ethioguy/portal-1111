@@ -8,7 +8,7 @@ from pydantic import BaseModel, Field
 
 from .tools import Toolbox
 
-app = FastAPI(title="The 11/11 Portal API", version="0.1.0")
+app = FastAPI(title="Portal 11 API", version="0.1.0")
 box = Toolbox()
 
 

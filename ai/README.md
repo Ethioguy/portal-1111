@@ -1,4 +1,4 @@
-# portal-ai — the AI layer of The 11/11 Portal
+# portal-ai — the AI layer of Portal 11
 
 Python package that turns the tracker into an agent-ready system.
 

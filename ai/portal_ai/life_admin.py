@@ -1,4 +1,4 @@
-"""Life admin Inbox for The 11/11 Portal for Wellness.
+"""Life admin Inbox for Portal 11.
 
 One place to drop every task and idea the moment it shows up, from any part of life
 (day job, community work, companies, family, house, college), and a light routine to clear it:

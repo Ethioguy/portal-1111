@@ -6,7 +6,7 @@ from pathlib import Path
 
 AREAS = [("health", "Health & Fitness"), ("intel", "Intellectual Life"), ("emo", "Emotional Life"), ("char", "Character"),
          ("spirit", "Spiritual Life"), ("love", "Love Relationship"), ("parent", "Parenting"), ("social", "Social Life"),
-         ("fin", "Financial Life"), ("career", "Career"), ("qol", "Quality of Life"), ("vision", "Life Vision")]
+         ("fin", "Financial Life"), ("career", "Career"), ("qol", "Quality of Life")]
 AREA_IDS = {a for a, _ in AREAS}
 DEFAULT_PATH = Path(__file__).resolve().parent.parent / "sample_data" / "demo_backup.json"
 
@@ -49,6 +49,24 @@ class Store:
         day["run"] = {"miles": str(miles), "min": str(minutes), "mode": mode, "done": True}
         self._save()
         return day["run"]
+
+    def add_statement(self, area: str, section: str, text: str) -> list[str]:
+        """Append one Premise/Vision/Purpose/Strategy statement to a life area (no duplicates)."""
+        if area not in AREA_IDS:
+            raise ValueError(f"unknown life area '{area}'")
+        if section not in ("premise", "vision", "purpose", "strategy"):
+            raise ValueError("section must be premise, vision, purpose or strategy")
+        text = " ".join(str(text).split())[:300]
+        if not text:
+            raise ValueError("statement is empty")
+        life = self.data["settings"].setdefault("life", {})
+        pv = life.setdefault(area, {}).setdefault("pv", {})
+        items = [i for i in pv.setdefault(section, []) if i]
+        if text.lower() not in (i.lower() for i in items):
+            items.append(text)
+        pv[section] = items
+        self._save()
+        return items
 
     def check_in(self, d: str, area: str) -> list[str]:
         if area not in AREA_IDS:
