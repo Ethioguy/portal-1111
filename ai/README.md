@@ -31,7 +31,7 @@ Add to `claude_desktop_config.json`:
     "the-11-11-portal": {
       "command": "python",
       "args": ["-m", "portal_ai.mcp_server"],
-      "cwd": "/path/to/portal-1111/ai",
+      "cwd": "/path/to/portal-11/ai",
       "env": { "PORTAL_DATA": "/path/to/my-backup.json" }
     }
   }

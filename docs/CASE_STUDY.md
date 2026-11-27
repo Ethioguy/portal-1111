@@ -3,7 +3,7 @@
 **An agent-ready, local-first life and training tracker, delivered with the PMI-CPMAI six-phase methodology**
 
 Author: Fitsum Habtemariam · Started: 11 November 2026, 11:11 PM · License: MIT
-Live app: https://ethioguy.github.io/portal-1111/ · Code: https://github.com/Ethioguy/portal-1111
+Live app: https://ethioguy.github.io/portal-11/ · Code: https://github.com/Ethioguy/portal-11
 
 ---
 

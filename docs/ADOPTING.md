@@ -7,7 +7,7 @@ MIT licence. Fork it, rename it, sell it if you want. No attribution required, t
 ## Ten-minute version
 
 ```bash
-git clone https://github.com/Ethioguy/portal-1111 my-app
+git clone https://github.com/Ethioguy/portal-11 my-app
 cd my-app
 cp config_examples/gym.py config.py     # or edit config.py directly
 python3 tools/build_config.py           # validates and injects your config
@@ -53,7 +53,7 @@ Being straight about the edges, so you don't lose an afternoon:
 ## Keeping your fork current
 
 ```bash
-git remote add upstream https://github.com/Ethioguy/portal-1111
+git remote add upstream https://github.com/Ethioguy/portal-11
 git fetch upstream && git merge upstream/main
 ```
 

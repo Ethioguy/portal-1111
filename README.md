@@ -56,8 +56,8 @@ Full guide, including what is *not* configurable yet: [docs/ADOPTING.md](docs/AD
 ## Build it yourself
 
 ```bash
-git clone https://github.com/Ethioguy/portal-1111
-cd portal-1111
+git clone https://github.com/Ethioguy/portal-11
+cd portal-11
 python3 tools/build_config.py       # config.py  -> window.CFG + manifest
 python3 tools/build_editions.py     # app.src.html -> index.html
 ```

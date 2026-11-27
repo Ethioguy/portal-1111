@@ -18,7 +18,7 @@ BRAND = {
     "since": "Since 11.11.2026 \u00b7 11:11 PM",             # origin line; "" to hide it
     "theme": "#F4FAF2",                                   # browser chrome colour
     "accent": "#1A7F17",
-    "repo": "https://github.com/Ethioguy/portal-1111",
+    "repo": "https://github.com/Ethioguy/portal-11",
     # The "Why I created it" card. Set to "" and the card disappears.
     "story": "I started it on 11.11.2026 at 11:11 PM as my own fresh start: one place to train, "
              "eat well and grow in all 11 areas of life. I'm sharing it openly because I wish "
